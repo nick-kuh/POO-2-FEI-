@@ -4,7 +4,7 @@
 class Regras {
 public:
     // Calcula o valor individual da carta
-    int calcularValorCarta(const Carta& carta) const {  // Adiciona `const`
+    int calcularValorCarta(Carta carta) const {  // Adiciona `const`
         int valor = carta.getValor();
         if (valor > 10) return 10;  // Cartas de rosto valem 10
         if (valor == 1) return 11;  // Ás pode valer 11

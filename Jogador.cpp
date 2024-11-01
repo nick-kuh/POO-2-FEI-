@@ -16,11 +16,30 @@ private:
     Regras regras;
 
 public:
-    // Construtor
-    Jogador(const string& n, double d) : nome(n), dinheiro(d), qnt_cartas(0) {}
+
+    // Jogador(string nome, int dinheiro){
+    //     this->nome = nome;
+    //     this->dinheiro = dinheiro;
+    //     this->qnt_cartas = 0;
+    // }
+
+    // Construtor (Não precisa declarar a quantidade de cartas)
+    Jogador(string nome, double dinheiro) : nome(nome), dinheiro(dinheiro), qnt_cartas(0) {}
+
+    string getNome(){
+        return nome;
+    }
+
+    double getDinheiro(){
+        return dinheiro;
+    }
+
+    Carta getCarta(int posicao){
+        return mao[posicao];
+    }
 
     // Método para adicionar uma carta à mão do jogador
-    void receberCarta(const Carta& carta) {
+    void receberCarta(Carta carta) {
         mao.push_back(carta);
         qnt_cartas++;  // Atualiza a quantidade de cartas na mão
     }
@@ -46,14 +65,18 @@ public:
         return pontuacaoAtual < 17;  // Exemplo: jogador pede carta se a pontuação for menor que 17
     }
 
-    // Exibe as informações do jogador
-    void exibirInfo() const {
-        cout << "Nome: " << nome << ", Dinheiro: " << dinheiro 
-             << ", Pontuação: " << calcularPontuacao() 
-             << ", Quantidade de Cartas: " << qnt_cartas << endl;
+    void mostrarMao() {
+        for (Carta carta : mao) {
+            cout << carta.toString() << " ";  // Usa toString() para representar a carta como string
+        }
+        cout << endl;
     }
 
-    string getNome() const {
-        return nome;
-    }
+    // Exibe as informações do jogador
+    // void exibirInfo() const {
+    //     cout << "Nome: " << nome << ", Dinheiro: " << dinheiro 
+    //          << ", Pontuação: " << calcularPontuacao() 
+    //          << ", Quantidade de Cartas: " << qnt_cartas << endl;
+    // }
+
 };
