@@ -1,12 +1,11 @@
-#include <iostream>
-#include "Carta.cpp"
-#include "Baralho.cpp"
+#include "Jogo.cpp"
 
-using namespace std;    
- 
 int main() {
+    // Inicializa o jogo com um jogador chamado "Alice" e um saldo inicial de 100
+    Jogo jogo("Alice", 100.0);
 
-    Baralho baralho(Carta cartas);
+    // Inicia o jogo
+    jogo.iniciarJogo();
 
-    baralho.mo
+    return 0;
 }

@@ -1,21 +1,31 @@
-// #pragma once
+#pragma once
 #include <iostream>
 using namespace std;
 
-class Carta{
+class Carta {
 private:
     int valor;
-    char naipe;
+    int naipe;
 
 public:
+    Carta() : valor(0), naipe(0) {}
+    Carta(int v, int n) : valor(v), naipe(n) {}
 
-    Carta() : valor(0), naipe(0) {} // Initializes with default values
-    
-    int getValor(){
+    int getValor() const {  // Adiciona `const` aqui
         return valor;
     }
 
-    char getNaipe(){
-        return naipe;
+    string getNaipe() const {
+        switch (naipe) {
+            case 0: return "♥";
+            case 1: return "♠";
+            case 2: return "♦";
+            case 3: return "♣";
+            default: return "?";
+        }
+    }
+       friend ostream& operator<<(ostream& os, const Carta& carta) {
+        os << "Valor: " << carta.valor << ", Naipe: " << carta.getNaipe();
+        return os;
     }
 };
