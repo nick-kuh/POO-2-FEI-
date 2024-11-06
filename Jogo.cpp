@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Baralho.cpp"
 #include "Jogador.cpp"
+#include "JogadorReal.cpp"
+#include "JogadorCPU.cpp"
 #include "Regras.cpp"
 
 using namespace std;
@@ -22,16 +24,29 @@ public:
 
     // Eu acho melhor a gnt fazer tudo por aqui, fica mais organizado, chamando todas as classes, e lá main nós só vamos chamar o Jogo
     // Adiciona Jogador
-    void adicionarJogador(string nome, int dinheiro){
-        jogadores.push_back(new Jogador(nome, dinheiro));
+    // void adicionarJogador(string nome, int dinheiro){
+    //     jogadores.push_back(new Jogador(nome, dinheiro));
+    // }
+
+    // Adiciona um jogador real
+    void adicionarJogadorReal(string nome, double dinheiro) {
+        jogadores.push_back(new JogadorReal(nome, dinheiro));
+    }
+
+    // Adiciona um jogador CPU
+    void adicionarJogadorCPU(string nome, double dinheiro) {
+        jogadores.push_back(new JogadorCPU(nome, dinheiro));
     }
 
     // Mostra os participantes
     void mostrarJogadores() {
+        cout << "________________________________________________________________" << endl;
         for (int i = 0; i < jogadores.size(); i++) {
             cout << jogadores[i]->getNome() << " | " << jogadores[i]->getDinheiro() << " | Cartas: ";
             jogadores[i]->mostrarMao();
         }
+        cout << "________________________________________________________________" << endl;
+
     }
 
    
@@ -56,7 +71,6 @@ public:
                 if (valorCarta == 11) {
                 numAses++;  // Contabiliza Áses
                 }
-                // cout << "Carta " << i + 1 << ": Valor = " << carta.getValor() << ", Naipe = " << carta.getNaipe() << endl;
             }
 
             // Ajusta a pontuação se necessário
@@ -76,8 +90,24 @@ public:
     }
 
     void rodada(){
-        for (Jogador* jogador : jogadores) {
-            jogador->pedirCarta(baralho.distribuirCarta());
+        int n;
+        int rodadas = 1;
+        while (true){
+            n = 0; 
+            cout << "Rodada " << rodadas++ << endl;
+            for (Jogador* jogador : jogadores) {
+                jogador->pedirCarta(baralho.distribuirCarta());
+                //! Verificar o problema aqui
+                if (jogador->deciciuParar()){
+                    n++;
+                    cout << "entrou " << n << endl;
+                }
+            }
+            
+            mostrarJogadores();
+            if (n == jogadores.size()){
+                break;
+            } 
         }
     }
 

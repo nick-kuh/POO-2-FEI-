@@ -14,17 +14,20 @@ private:
     vector<Carta> mao;   // Cartas na mão do jogador
     int qnt_cartas;      // Quantidade de cartas na mão
     Regras regras;
+    bool parou;
 
 public:
 
-    // Jogador(string nome, int dinheiro){
-    //     this->nome = nome;
-    //     this->dinheiro = dinheiro;
-    //     this->qnt_cartas = 0;
-    // }
+    
 
     // Construtor (Não precisa declarar a quantidade de cartas)
-    Jogador(string nome, double dinheiro) : nome(nome), dinheiro(dinheiro), qnt_cartas(0) {}
+    Jogador(string nome, double dinheiro) : nome(nome), dinheiro(dinheiro), qnt_cartas(0), parou(0) {}
+
+    // Jogador(string nome, int dinheiro, int qnt_cartas){
+    //     // this->nome = nome;
+    //     // this->dinheiro = dinheiro;
+    //     // this->qnt_cartas = 0;
+    // }
 
     string getNome(){
         return nome;
@@ -36,6 +39,10 @@ public:
 
     Carta getCarta(int posicao){
         return mao[posicao];
+    }
+
+    bool deciciuParar(){
+        return parou;
     }
 
     // Método para adicionar uma carta à mão do jogador
@@ -72,11 +79,11 @@ public:
         cout << endl;
     }
 
-    void pedirCarta(Carta carta) {
+    virtual void pedirCarta(Carta carta) {
         int pontuacaoAtual = this->calcularPontuacao();
         cout << this->getNome() << " : " << pontuacaoAtual << endl;
         if (pontuacaoAtual > 21){
-            
+            parou = true;
             cout << "Estourou, não pode continuar" << endl;
         }
         else{
