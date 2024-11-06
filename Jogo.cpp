@@ -75,6 +75,12 @@ public:
         }
     }
 
+    void rodada(){
+        for (Jogador* jogador : jogadores) {
+            jogador->pedirCarta(baralho.distribuirCarta());
+        }
+    }
+
 };
 
 // Versão anterior

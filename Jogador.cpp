@@ -50,7 +50,7 @@ public:
         int numAses = 0;
 
         // Calcula o valor total da mão, considerando o valor dos Ases
-        for (const Carta& carta : mao) {
+        for (Carta carta : mao) {
             int valorCarta = regras.calcularValorCarta(carta);
             somaCartas += valorCarta;
             if (valorCarta == 11) numAses++;  // Contabiliza Áses
@@ -60,7 +60,7 @@ public:
     }
 
     // Método para tomar decisão: retorna true se o jogador quer outra carta, false se quer parar
-    bool tomarDecisao() const {
+    bool tomarDecisao() {
         int pontuacaoAtual = calcularPontuacao();
         return pontuacaoAtual < 17;  // Exemplo: jogador pede carta se a pontuação for menor que 17
     }
@@ -72,11 +72,15 @@ public:
         cout << endl;
     }
 
-    // Exibe as informações do jogador
-    // void exibirInfo() const {
-    //     cout << "Nome: " << nome << ", Dinheiro: " << dinheiro 
-    //          << ", Pontuação: " << calcularPontuacao() 
-    //          << ", Quantidade de Cartas: " << qnt_cartas << endl;
-    // }
-
+    void pedirCarta(Carta carta) {
+        int pontuacaoAtual = this->calcularPontuacao();
+        cout << this->getNome() << " : " << pontuacaoAtual << endl;
+        if (pontuacaoAtual > 21){
+            
+            cout << "Estourou, não pode continuar" << endl;
+        }
+        else{
+            this->receberCarta(carta);
+        }
+    }
 };

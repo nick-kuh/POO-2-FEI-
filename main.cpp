@@ -9,6 +9,11 @@ int main() {
     
     jogo.iniciarJogo();
     jogo.mostrarJogadores();
+    jogo.rodada();
+    jogo.mostrarJogadores();
+    jogo.rodada();
+    jogo.mostrarJogadores();
+
 
 
 
