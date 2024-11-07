@@ -1,3 +1,4 @@
+#pragma once
 #include "Jogador.cpp"
 
 class JogadorCPU : public Jogador {
@@ -9,7 +10,7 @@ public:
 
     virtual void pedirCarta(Carta carta, int pontuacao) {
         // int pontuacaoAtual = calcularPontuacao();
-        if(!this->getParou()){
+        if ((!this->getParou()) || (this->getBlackJack())){
             if (pontuacao > 21){
                 cout << getNome() << ", você estourou e não pode pegar mais cartas." << endl;
                 this->deciciuParar();
@@ -24,6 +25,10 @@ public:
                 cout << getNome() << " decidiu parar." << endl;
                 this->deciciuParar();
             }
+        }
+        else{
+            cout << this->getNome() << " parou de jogar" << endl;
+            return;
         }
     }
 };

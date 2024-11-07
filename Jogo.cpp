@@ -5,6 +5,7 @@
 #include "Jogador.cpp"
 #include "JogadorReal.cpp"
 #include "JogadorCPU.cpp"
+#include "Dealer.cpp"
 #include "Regras.cpp"
 
 
@@ -15,6 +16,7 @@ private:
     Baralho baralho;
     Regras regras;
     vector<Jogador*> jogadores;
+    int qntJogadores = 0, n = 0;
 
 public:
 
@@ -28,15 +30,30 @@ public:
         else if (tipo == "cpu"){
             jogadores.push_back(new JogadorCPU(nome, dinheiro));
         }
+        this->qntJogadores++;
+    }
+
+    void adicionarDealer(){
+        jogadores.push_back(new Dealer);
+        this->qntJogadores++;
     }
 
     // Mostra os participantes
     void mostrarJogadores() {
         cout << "________________________________________________________________" << endl;
         for (Jogador* jogador : jogadores) {
-            cout << jogador->getNome() << " | " << jogador->getDinheiro() << " | Cartas: "; 
-            jogador->mostrarMao();
-            cout << " | Pontuação: " << jogador->calcularPontuacao() << endl;
+            cout << jogador->getNome() << " | " << jogador->getDinheiro() << " | Cartas: ";
+            if((jogador->getNome() == "Dealer") && (n != qntJogadores)){
+                cout << jogador->getCarta(0).toStringCarta() << " ";
+            }
+            else{
+                jogador->mostrarMao();
+                cout << " | Pontuação: " << jogador->calcularPontuacao();
+            }
+            if(jogador->getBlackJack()){
+                cout << " | BLACK JACK!";
+            }
+            cout << endl;
         }
         cout << "________________________________________________________________" << endl;
 
@@ -44,8 +61,8 @@ public:
 
  // Método para iniciar o jogo
     void iniciarJogo() {
+        this->adicionarDealer();
         for (Jogador* jogador : jogadores) {
-            cout << "Iniciando o jogo para " << jogador->getNome() << "!" << endl;
 
             int somaCartas = 0;
             int numAses = 0;
@@ -67,21 +84,25 @@ public:
             // Ajusta a pontuação se necessário
             somaCartas = regras.calcularMelhorPontuacao(somaCartas, numAses);
 
-            if (somaCartas == 21) {
-                cout << "Você tem um Blackjack!" << endl;
-            } else if (somaCartas > 21) {
-                cout << "Você estourou!" << endl;
-            } else {
-                cout << "Soma das cartas: " << somaCartas << endl;
-            }
+            // mostrarJogadores();
 
-            cout << "Cartas restantes no baralho: " << baralho.cartasRestantes() << endl;
-            cout << "________________________________________________________________" << endl;
+            if (somaCartas == 21) {
+                jogador->deuBlackJack();
+            } 
+            // else if (somaCartas > 21) {
+            //     cout << "Você estourou!" << endl;
+            // } 
+            // else {
+            //     cout << "Soma das cartas: " << somaCartas << endl;
+            // }
+
+            // cout << "Cartas restantes no baralho: " << baralho.cartasRestantes() << endl;
+            // cout << "________________________________________________________________" << endl;
         }
     }
 
     void rodadas(){
-        int n, pontuacaoAtual;
+        int pontuacaoAtual;
         int rodadas = 1;
         while (true){
             n = 0; 

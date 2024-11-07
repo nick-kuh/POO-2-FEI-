@@ -15,7 +15,7 @@ private:
     int qnt_cartas;      // Quantidade de cartas na mão
     Regras regras;
     bool parou;
-    bool estourou;
+    bool blackJack = false;
 
 public:
     // Construtor (Não precisa declarar a quantidade de cartas)
@@ -44,9 +44,14 @@ public:
         return parou;
     }
 
-    // bool getEstourou(){
-    //     return estourou;
-    // }
+    bool getBlackJack(){
+        return this->blackJack;
+    }
+
+    bool deuBlackJack(){
+        this->blackJack = true;
+        return true;
+    }
 
     // Método para adicionar uma carta à mão do jogador
     void receberCarta(Carta carta) {
@@ -75,10 +80,11 @@ public:
         return pontuacaoAtual < 17;  // Exemplo: jogador pede carta se a pontuação for menor que 17
     }
 
-    void mostrarMao() {
+    void mostrarMao() { 
         for (Carta carta : mao) {
             cout << carta.toStringCarta() << " ";  // Usa toStringCarta() para representar a carta como string
         }
+
     }
 
     virtual void pedirCarta(Carta carta, int pontuacao) {

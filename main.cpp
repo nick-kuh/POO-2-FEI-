@@ -1,6 +1,10 @@
 #include "Jogo.cpp"
 
 int main() {
+
+//__________________________________________________________________________________________________________
+// Incializando o programa
+
     int qJogadores, qReal, dinheiro;
     string nome;
     string nomes[15] = {
@@ -8,8 +12,14 @@ int main() {
         "Sophia", "Pedro", "Mariana", "Rafael", "Lucas",
         "Matheus", "Leticia", "Daniel", "Bruno"
     };
+
     srand(time(0)); // Garante que o número gerado será diferente a cada execução.
+
     Jogo jogo;
+
+//__________________________________________________________________________________________________________
+// Adicionando os jogadores no jogo
+
     cout << "Quantos jogadores no total?" << endl;
     cin >> qJogadores;
 
@@ -23,14 +33,12 @@ int main() {
     }
 
     for (int i=0; i<(qJogadores - qReal); i++){
-        
         jogo.adicionarJogador(nomes[rand() % 14], 1000, "cpu");
     }
-
-    // jogo.adicionarJogadorReal("Nick", 100);
-    // jogo.adicionarJogadorCPU("Viny", 1000);
-    // jogo.adicionarJogadorCPU("Dereck", 500);
     
+//_____________________________________________________________________________________________________________
+// Iniciando o jogo
+
     jogo.iniciarJogo();
     jogo.mostrarJogadores();
     jogo.rodadas();

@@ -1,3 +1,4 @@
+#pragma once
 #include "Jogador.cpp"
 #include <iostream>
 
@@ -10,9 +11,8 @@ public:
   JogadorReal(string nome, double dinheiro)
       : Jogador(nome, dinheiro) {}
 
-  virtual void pedirCarta(Carta carta, int pontuacao)
-  {
-    if (!this->getParou()){
+  virtual void pedirCarta(Carta carta, int pontuacao){
+    if ((!this->getParou()) || (this->getBlackJack())){
       if (pontuacao > 21){
         cout << getNome() << ", você estourou e não pode pegar mais cartas." << endl;
         this->deciciuParar();
@@ -30,7 +30,7 @@ public:
       }
     }
     else{
-      cout << this->getNome() << " parou" << endl;
+      cout << this->getNome() << " parou de jogar" << endl;
       return;
     }
   }
