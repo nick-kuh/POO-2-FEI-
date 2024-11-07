@@ -20,37 +20,27 @@ public:
 
     Jogo(){}
 
-    // Construtor que inicializa o jogo com um jogador 
-    // Jogo(const string& nomeJogador, double dinheiroInicial)
-    //     : jogador(nomeJogador, dinheiroInicial) {}
-
     // Adiciona Jogador
-    // void adicionarJogador(string nome, int dinheiro){
-    //     jogadores.push_back(new Jogador(nome, dinheiro));
-    // }
-
-    // Adiciona um jogador real
-    void adicionarJogadorReal(string nome, double dinheiro) {
-        jogadores.push_back(new JogadorReal(nome, dinheiro));
-    }
-
-    // Adiciona um jogador CPU
-    void adicionarJogadorCPU(string nome, double dinheiro) {
-        jogadores.push_back(new JogadorCPU(nome, dinheiro));
+    void adicionarJogador(string nome, int dinheiro, string tipo){
+        if(tipo == "real"){
+            jogadores.push_back(new JogadorReal(nome, dinheiro));
+        }
+        else if (tipo == "cpu"){
+            jogadores.push_back(new JogadorCPU(nome, dinheiro));
+        }
     }
 
     // Mostra os participantes
     void mostrarJogadores() {
         cout << "________________________________________________________________" << endl;
-        for (int i = 0; i < jogadores.size(); i++) {
-            cout << jogadores[i]->getNome() << " | " << jogadores[i]->getDinheiro() << " | Cartas: ";
-            jogadores[i]->mostrarMao();
+        for (Jogador* jogador : jogadores) {
+            cout << jogador->getNome() << " | " << jogador->getDinheiro() << " | Cartas: "; 
+            jogador->mostrarMao();
+            cout << " | Pontuação: " << jogador->calcularPontuacao() << endl;
         }
         cout << "________________________________________________________________" << endl;
 
     }
-
-   
 
  // Método para iniciar o jogo
     void iniciarJogo() {
@@ -91,13 +81,14 @@ public:
     }
 
     void rodadas(){
-        int n;
+        int n, pontuacaoAtual;
         int rodadas = 1;
         while (true){
             n = 0; 
             cout << "Rodada " << rodadas++ << endl;
             for (Jogador* jogador : jogadores) {
-                jogador->pedirCarta(baralho.distribuirCarta());
+                pontuacaoAtual = jogador->calcularPontuacao();
+                jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
                 if (jogador->getParou()){
                     n++;
                 }

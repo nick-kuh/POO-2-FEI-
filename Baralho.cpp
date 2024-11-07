@@ -41,12 +41,6 @@ public:
         }
     }
 
-    void mostrarCartas() {
-        for (int i = 0; i < 52; i++) {
-            cout << "Carta " << cartas[i].toString() << endl;
-        }
-    }
-
     // Retorna o número de cartas restantes no baralho
     int cartasRestantes() {
         return 52 - posicao;

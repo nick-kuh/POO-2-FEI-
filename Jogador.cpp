@@ -15,6 +15,7 @@ private:
     int qnt_cartas;      // Quantidade de cartas na mão
     Regras regras;
     bool parou;
+    bool estourou;
 
 public:
     // Construtor (Não precisa declarar a quantidade de cartas)
@@ -43,6 +44,10 @@ public:
         return parou;
     }
 
+    // bool getEstourou(){
+    //     return estourou;
+    // }
+
     // Método para adicionar uma carta à mão do jogador
     void receberCarta(Carta carta) {
         mao.push_back(carta);
@@ -50,7 +55,7 @@ public:
     }
 
     // Método para calcular a pontuação total das cartas na mão
-    int calcularPontuacao() const {
+    int calcularPontuacao() {
         int somaCartas = 0;
         int numAses = 0;
 
@@ -72,17 +77,14 @@ public:
 
     void mostrarMao() {
         for (Carta carta : mao) {
-            cout << carta.toString() << " ";  // Usa toString() para representar a carta como string
+            cout << carta.toStringCarta() << " ";  // Usa toStringCarta() para representar a carta como string
         }
-        cout << endl;
     }
 
-    virtual void pedirCarta(Carta carta) {
-        int pontuacaoAtual = this->calcularPontuacao();
-        cout << this->getNome() << " : " << pontuacaoAtual << endl;
-        if (pontuacaoAtual > 21){
+    virtual void pedirCarta(Carta carta, int pontuacao) {
+        if (pontuacao > 21){
             parou = true;
-            cout << "Estourou, não pode continuar" << endl;
+            return;
         }
         else{
             this->receberCarta(carta);

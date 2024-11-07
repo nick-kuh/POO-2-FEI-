@@ -54,16 +54,16 @@ public:
         return vValor;
     }
 
-    int getV_Naipe(){
-        return vNaipe;
-    }
+    // int getV_Naipe(){
+    //     return vNaipe;
+    // }
 
-    string getNaipe(){
-        return naipe;
-    }
+    // string getNaipe(){
+    //     return naipe;
+    // }
 
-    string toString(){
-        return "(" +valor + " , " + naipe + ")";
+    string toStringCarta(){
+        return "(" + valor + " , " + naipe + ")";
     }
 };
 
