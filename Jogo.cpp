@@ -1,10 +1,12 @@
 #pragma once
 #include <iostream>
+#include <thread>
 #include "Baralho.cpp"
 #include "Jogador.cpp"
 #include "JogadorReal.cpp"
 #include "JogadorCPU.cpp"
 #include "Regras.cpp"
+
 
 using namespace std;
 
@@ -22,7 +24,6 @@ public:
     // Jogo(const string& nomeJogador, double dinheiroInicial)
     //     : jogador(nomeJogador, dinheiroInicial) {}
 
-    // Eu acho melhor a gnt fazer tudo por aqui, fica mais organizado, chamando todas as classes, e lá main nós só vamos chamar o Jogo
     // Adiciona Jogador
     // void adicionarJogador(string nome, int dinheiro){
     //     jogadores.push_back(new Jogador(nome, dinheiro));
@@ -89,7 +90,7 @@ public:
         }
     }
 
-    void rodada(){
+    void rodadas(){
         int n;
         int rodadas = 1;
         while (true){
@@ -97,20 +98,17 @@ public:
             cout << "Rodada " << rodadas++ << endl;
             for (Jogador* jogador : jogadores) {
                 jogador->pedirCarta(baralho.distribuirCarta());
-                //! Verificar o problema aqui
-                if (jogador->deciciuParar()){
+                if (jogador->getParou()){
                     n++;
-                    cout << "entrou " << n << endl;
                 }
             }
-            
+            this_thread::sleep_for(chrono::milliseconds(500));
             mostrarJogadores();
             if (n == jogadores.size()){
                 break;
             } 
         }
     }
-
 };
 
 // Versão anterior

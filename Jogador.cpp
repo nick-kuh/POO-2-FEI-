@@ -17,17 +17,10 @@ private:
     bool parou;
 
 public:
-
-    
-
     // Construtor (Não precisa declarar a quantidade de cartas)
-    Jogador(string nome, double dinheiro) : nome(nome), dinheiro(dinheiro), qnt_cartas(0), parou(0) {}
+    Jogador(string nome, double dinheiro) : nome(nome), dinheiro(dinheiro), qnt_cartas(0){}
+    // Jogador(string nome, double dinheiro, bool parou) : nome(nome), dinheiro(dinheiro), qnt_cartas(0), parou(parou) {}
 
-    // Jogador(string nome, int dinheiro, int qnt_cartas){
-    //     // this->nome = nome;
-    //     // this->dinheiro = dinheiro;
-    //     // this->qnt_cartas = 0;
-    // }
 
     string getNome(){
         return nome;
@@ -42,6 +35,11 @@ public:
     }
 
     bool deciciuParar(){
+        this->parou = true;
+        return true;
+    }
+
+    bool getParou(){
         return parou;
     }
 

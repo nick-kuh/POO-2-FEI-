@@ -9,21 +9,8 @@ int main() {
     
     jogo.iniciarJogo();
     jogo.mostrarJogadores();
-    jogo.rodada();
+    jogo.rodadas();
     jogo.mostrarJogadores();
-    // jogo.rodada();
-    // jogo.mostrarJogadores();
-    // jogo.rodada();
-    // jogo.mostrarJogadores();
-
-
-
-
-    // Inicializa o jogo com um jogador chamado "Alice" e um saldo inicial de 100
-    // Jogo jogo("Alice", 100.0);
-
-    // Inicia o jogo
-    // jogo.iniciarJogo();
 
     return 0;
 }
