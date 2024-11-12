@@ -12,7 +12,7 @@ public:
       : Jogador(nome, dinheiro) {}
 
   virtual void pedirCarta(Carta carta, int pontuacao){
-    if ((!this->getParou()) || (this->getBlackJack())){
+    if (!(this->getParou())){
       if (pontuacao > 21){
         cout << getNome() << ", você estourou e não pode pegar mais cartas." << endl;
         this->deciciuParar();

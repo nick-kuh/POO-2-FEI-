@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <thread>
+#include <vector>
 #include "Baralho.cpp"
 #include "Jogador.cpp"
 #include "JogadorReal.cpp"
@@ -45,11 +46,13 @@ public:
             cout << jogador->getNome() << " | " << jogador->getDinheiro() << " | Cartas: ";
             if((jogador->getNome() == "Dealer") && (n != qntJogadores)){
                 cout << jogador->getCarta(0).toStringCarta() << " ";
+                cout << endl;
+                continue; // Vai pular para proxima iteração, ou seja, nao rodar o resto
             }
-            else{
-                jogador->mostrarMao();
-                cout << " | Pontuação: " << jogador->calcularPontuacao();
-            }
+
+            jogador->mostrarMao();
+            cout << " | Pontuação: " << jogador->calcularPontuacao();
+
             if(jogador->getBlackJack()){
                 cout << " | BLACK JACK!";
             }
@@ -88,16 +91,8 @@ public:
 
             if (somaCartas == 21) {
                 jogador->deuBlackJack();
+                jogador->deciciuParar(); // Deu BlackJack, o jogador automaticamente para o Jogo
             } 
-            // else if (somaCartas > 21) {
-            //     cout << "Você estourou!" << endl;
-            // } 
-            // else {
-            //     cout << "Soma das cartas: " << somaCartas << endl;
-            // }
-
-            // cout << "Cartas restantes no baralho: " << baralho.cartasRestantes() << endl;
-            // cout << "________________________________________________________________" << endl;
         }
     }
 
@@ -121,36 +116,57 @@ public:
             } 
         }
     }
+
+    void finalJogo(){
+        vector<Jogador*> vencedores;
+        vector<Jogador*> empatados;
+        vector<Jogador*> perdedores;
+        int pontuacaoDealer;
+
+        // Encontra o Dealer na lista de jogadores
+        for (Jogador* jogador : jogadores) {
+            if (jogador->getNome() == "Dealer") {
+                pontuacaoDealer = jogador->calcularPontuacao();
+                break;
+            }
+        }
+
+        for (Jogador* jogador : jogadores) {
+            // Se for o Dealer, ele vai pular o Dealer
+            if (jogador->getNome() == "Dealer"){
+                continue;
+            }
+
+            int pontuacaoJogador = jogador->calcularPontuacao();
+
+            // Define o resultado para cada jogador
+            if (pontuacaoJogador > 21) {
+                perdedores.push_back(jogador);
+            } else if (pontuacaoJogador > pontuacaoDealer || pontuacaoDealer > 21) {
+                vencedores.push_back(jogador);
+            } else if (pontuacaoJogador == pontuacaoDealer) {
+                empatados.push_back(jogador);
+            } else {
+                perdedores.push_back(jogador);
+            }
+        }
+
+        cout << "Vencedores: ";
+        for (Jogador* jogador : vencedores) {
+            cout << jogador->getNome() << " ";
+        }
+        cout << endl;
+        cout << "Empatados: ";
+        for (Jogador* jogador : empatados) {
+            cout << jogador->getNome() << " ";
+        }
+        cout << endl;
+        cout << "Perdedores: ";
+        for (Jogador* jogador : perdedores) {
+            cout << jogador->getNome() << " ";
+        }
+        cout << endl;
+
+
+    }
 };
-
-// Versão anterior
-//  // Método para iniciar o jogo
-//     void iniciarJogo() {
-//         cout << "Iniciando o jogo para " << jogador.getNome() << "!" << endl;
-
-//         int somaCartas = 0;
-//         int numAses = 0;
-
-//         // Distribuir duas cartas iniciais para o jogador
-//         for (int i = 0; i < 2; ++i) {
-//             Carta carta = baralho.distribuirCarta();
-//             int valorCarta = regras.calcularValorCarta(carta);
-//             somaCartas += valorCarta;
-//             if (valorCarta == 11) numAses++;  // Contabiliza Áses
-//             jogador.receberCarta(carta);
-//             cout << "Carta " << i + 1 << ": Valor = " << carta.getValor() << ", Naipe = " << carta.getNaipe() << endl;
-//         }
-
-//         // Ajusta a pontuação se necessário
-//         somaCartas = regras.calcularMelhorPontuacao(somaCartas, numAses);
-
-//         if (somaCartas == 21) {
-//             cout << "Você tem um Blackjack!" << endl;
-//         } else if (somaCartas > 21) {
-//             cout << "Você estourou!" << endl;
-//         } else {
-//             cout << "Soma das cartas: " << somaCartas << endl;
-//         }
-
-//         cout << "Cartas restantes no baralho: " << baralho.cartasRestantes() << endl;
-//     }

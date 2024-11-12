@@ -43,6 +43,7 @@ int main() {
     jogo.mostrarJogadores();
     jogo.rodadas();
     jogo.mostrarJogadores();
+    jogo.finalJogo();
 
     return 0;
 }
