@@ -31,6 +31,11 @@ public:
         return dinheiro;
     }
 
+    // Método para atualizar o saldo do jogador com o valor ganho ou perdido
+    void atualizarDinheiro(double valor) {
+        dinheiro += valor;
+    }
+
     Carta getCarta(int posicao){
         return mao[posicao];
     }

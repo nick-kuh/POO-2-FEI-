@@ -31,4 +31,13 @@ public:
             return;
         }
     }
+
+        // Método para definir automaticamente a aposta do Jogador CPU
+    int apostarAutomaticamente() {
+        int aposta = static_cast<int>(getDinheiro() * 0.1);  // 10% do saldo
+        if (aposta < 10) {  // Define um valor mínimo para a aposta
+            aposta = 10;
+        }
+        return aposta;
+    }
 };

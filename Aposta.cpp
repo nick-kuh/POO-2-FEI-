@@ -38,23 +38,34 @@ public:
     }
 
     void setAposta(){
+        cout << "Você tem " << dinheiro << " disponível para apostar." << endl;
         cout << "Qual o valor da aposta? ";
         cin >> valorApostado;
     }
+
     void calcularValor() {
-        if (resultado == 1){ // Ganhou na aposta
-            valorRecebido = valorApostado * 2;
-        }
-        else if (resultado == 2){ // Perdeu na aposta
-            valorRecebido = -valorApostado;
-        }
-        else{ // empatou na aposta
-            valorRecebido = valorApostado;
+        if (resultado == 1) {  // Ganhou na aposta
+            valorRecebido = valorApostado;  // O jogador recebe o dobro da aposta inicial
+        } else if (resultado == 2) {  // Perdeu na aposta
+            valorRecebido = -valorApostado;  // O jogador perde o valor apostado
+        } else {  // Empate
+            valorRecebido = 0;  // Em caso de empate, não há ganho nem perda
         }
     }
-    void pagarAposta() {
-        cout << "Dinheiro antes: " << dinheiro << endl;
-        dinheiro += valorRecebido;
-        cout << "Dinheiro depois: " << dinheiro << endl;
+
+
+    // Novo método para definir o resultado
+    void setResultado(int res) {
+        resultado = res;
     }
+
+    int getValorRecebido() const {
+        return valorRecebido;
+    }
+
+    // void pagarAposta() {
+    //     cout << "Dinheiro antes: " << dinheiro << endl;
+    //     dinheiro += valorRecebido;
+    //     cout << "Dinheiro depois: " << dinheiro << endl;
+    // }
 };
