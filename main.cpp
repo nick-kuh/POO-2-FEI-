@@ -38,12 +38,9 @@ int main() {
     
 //_____________________________________________________________________________________________________________
 // Iniciando o jogo
-
     jogo.iniciarJogo();
     jogo.mostrarJogadores();
     jogo.rodadas();
     jogo.mostrarJogadores();
     jogo.finalJogo();
-
-    return 0;
 }

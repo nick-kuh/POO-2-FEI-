@@ -37,10 +37,15 @@ public:
         this->jogador = jogador;
     }
 
-    void setAposta(){
+    void setAposta() {
         cout << "Você tem " << dinheiro << " disponível para apostar." << endl;
-        cout << "Qual o valor da aposta? ";
-        cin >> valorApostado;
+        do {
+            cout << "Qual o valor da aposta? ";
+            cin >> valorApostado;
+            if (valorApostado > dinheiro) {
+                cout << "Aposta inválida! Você não pode apostar mais do que o valor disponível (" << dinheiro << ")." << endl;
+            }
+        } while (valorApostado > dinheiro);
     }
 
     void calcularValor() {
@@ -62,10 +67,4 @@ public:
     int getValorRecebido() const {
         return valorRecebido;
     }
-
-    // void pagarAposta() {
-    //     cout << "Dinheiro antes: " << dinheiro << endl;
-    //     dinheiro += valorRecebido;
-    //     cout << "Dinheiro depois: " << dinheiro << endl;
-    // }
 };
