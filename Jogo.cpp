@@ -83,17 +83,17 @@ public:
     }
 
     void iniciarJogo() {
-        this->adicionarDealer();
+        //this->adicionarDealer();
         realizarApostas();  // Coletar as apostas no início do jogo
-
+        baralho.criarBaralho();
+        baralho.embaralharCartas();
+        
         for (Jogador* jogador : jogadores) {
             int somaCartas = 0;
             int numAses = 0;
 
-            baralho.embaralharCartas();
-
             for (int i = 0; i < 2; ++i) {
-                jogador->receberCarta(baralho.distribuirCarta());
+                jogador->receberCarta(baralho);
                 Carta carta = jogador->getCarta(i);
                 int valorCarta = regras.calcularValorCarta(carta);
                 somaCartas += valorCarta;
@@ -119,7 +119,7 @@ public:
             cout << "Rodada " << rodadas++ << endl;
             for (Jogador* jogador : jogadores) {
                 pontuacaoAtual = jogador->calcularPontuacao();
-                jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
+                jogador->pedirCarta(baralho, pontuacaoAtual);
                 if (jogador->getParou()){
                     n++;
                 }
@@ -204,6 +204,17 @@ void finalJogo() {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
     }
     cout << endl;
+
+    //para cada jogador eu limpo as cartas da mão e devolco ao monte, por fim, reembaralho a mão
+    for (Jogador* jogador : jogadores) {  
+        jogador->limparMao();
+        jogador->resetBlackJack();
+        jogador->resetParou();
+        jogador->resetQntCarta();
+        baralho.reembaralharCartas();
+        n = 0;
+    }
+
 }
 
 

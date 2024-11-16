@@ -1,4 +1,5 @@
 #include "Jogo.cpp"
+//#include "Jogador.cpp"
 
 int main() {
 
@@ -38,9 +39,26 @@ int main() {
     
 //_____________________________________________________________________________________________________________
 // Iniciando o jogo
-    jogo.iniciarJogo();
-    jogo.mostrarJogadores();
-    jogo.rodadas();
-    jogo.mostrarJogadores();
-    jogo.finalJogo();
+    jogo.adicionarDealer();
+
+   for (int rod = 0; rod < 2; rod++){
+        int numero_rodada = rod + 1;
+        cout<<"======================"<<endl;
+        cout<< "Início da mão "<<numero_rodada<<endl;
+        cout<<"======================"<<endl;
+
+        jogo.iniciarJogo();
+        jogo.mostrarJogadores();
+        jogo.rodadas();
+        //jogo.mostrarJogadores();
+        jogo.finalJogo();
+
+        cout<<"======================"<<endl;
+        cout<< "Fim da mão "<<numero_rodada<<endl;
+        cout<<"======================"<<endl;
+        cout <<""<<endl;
+
+        numero_rodada += numero_rodada;
+        //return 0
+    }
 }

@@ -51,10 +51,13 @@ public:
     void calcularValor() {
         if (resultado == 1) {  // Ganhou na aposta
             valorRecebido = valorApostado;  // O jogador recebe o dobro da aposta inicial
+            dinheiro+=valorRecebido;
         } else if (resultado == 2) {  // Perdeu na aposta
             valorRecebido = -valorApostado;  // O jogador perde o valor apostado
+            dinheiro+=valorRecebido;
         } else {  // Empate
             valorRecebido = 0;  // Em caso de empate, não há ganho nem perda
+            dinheiro+=valorRecebido;
         }
     }
 
