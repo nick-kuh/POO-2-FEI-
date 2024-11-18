@@ -4,7 +4,6 @@
 #include <vector>
 #include "Carta.cpp"
 #include "Regras.cpp"
-//#include "Baralho.cpp"
 
 using namespace std;
 
@@ -17,7 +16,6 @@ private:
     Regras regras;
     bool parou;
     bool blackJack = false;
-    int pontuacao;
 
 public:
     // Construtor (Não precisa declarar a quantidade de cartas)
@@ -60,24 +58,9 @@ public:
         return true;
     }
 
-    bool resetBlackJack(){
-        this->blackJack = false;
-        return this->blackJack;
-    }
-
-    bool resetParou(){
-        this->parou = false;
-        return this->parou;
-    }
-    
-    int resetQntCarta(){
-        this->qnt_cartas = 0;
-        return this->qnt_cartas;
-    }
-
     // Método para adicionar uma carta à mão do jogador
-    void receberCarta(Baralho baralho) {
-        mao.push_back(baralho.distribuirCarta());
+    void receberCarta(Carta carta) {
+        mao.push_back(carta);
         qnt_cartas++;  // Atualiza a quantidade de cartas na mão
     }
 
@@ -109,19 +92,25 @@ public:
 
     }
 
-    //crio o método que deixa os jogadores sem cartas na mão e seto a sua pontuação como 0 para que não conte na próxima rodada
-    void limparMao(){ 
-        mao.clear();
-        pontuacao = 0;   
-    } 
-
-    virtual void pedirCarta(Baralho baralho, int pontuacao) {
+    virtual void pedirCarta(Carta carta, int pontuacao) {
         if (pontuacao > 21){
             parou = true;
             return;
         }
         else{
-            this->receberCarta(baralho);
+            this->receberCarta(carta);
         }
+    }
+
+    void tirarCartasMao(){
+        parou = false;
+        blackJack = false;
+        mao.clear();
+    }
+
+    void semDinheiro(){
+        this->deciciuParar();
+        dinheiro = 0;
+        cout << "Não pode mais jogar, sem Dinheiro" << endl;
     }
 };

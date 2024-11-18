@@ -37,27 +37,42 @@ public:
         this->jogador = jogador;
     }
 
-    void setAposta() {
+    void setAposta(double dinheiro) {
         cout << "Você tem " << dinheiro << " disponível para apostar." << endl;
-        do {
+        while(true){
             cout << "Qual o valor da aposta? ";
             cin >> valorApostado;
-            if (valorApostado > dinheiro) {
+            // Verifica se a entrada é válida
+            if (cin.fail()) {
+                cin.clear(); // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignora a linha de entrada
+                cout << "Aposta inválida! É preciso que coloque um número." << endl;
+            } 
+            else if (valorApostado > dinheiro) {
                 cout << "Aposta inválida! Você não pode apostar mais do que o valor disponível (" << dinheiro << ")." << endl;
+            } 
+            else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa a entrada restante
+                break; // Se tudo estiver certo, sai do loop
             }
-        } while (valorApostado > dinheiro);
+        }
     }
 
     void calcularValor() {
         if (resultado == 1) {  // Ganhou na aposta
             valorRecebido = valorApostado;  // O jogador recebe o dobro da aposta inicial
-            dinheiro+=valorRecebido;
-        } else if (resultado == 2) {  // Perdeu na aposta
+        } 
+
+        else if (resultado == 2) {  // Perdeu na aposta
             valorRecebido = -valorApostado;  // O jogador perde o valor apostado
-            dinheiro+=valorRecebido;
-        } else {  // Empate
+        } 
+
+        else if (resultado == 3) {  // BlackJack na aposta
+            valorRecebido = valorApostado * 1.5;  // O jogador recebe 1.5x o valor Apostado
+        } 
+        
+        else {  // Empate
             valorRecebido = 0;  // Em caso de empate, não há ganho nem perda
-            dinheiro+=valorRecebido;
         }
     }
 
@@ -69,5 +84,9 @@ public:
 
     int getValorRecebido() const {
         return valorRecebido;
+    }
+
+    void valorApostadoZero() {
+        valorApostado = 0;
     }
 };

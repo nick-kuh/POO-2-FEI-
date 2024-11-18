@@ -8,7 +8,7 @@ public:
         : Jogador(nome, dinheiro) {
         }
 
-    virtual void pedirCarta(Baralho baralho, int pontuacao) {
+    virtual void pedirCarta(Carta carta, int pontuacao) {
         // int pontuacaoAtual = calcularPontuacao();
         if ((!this->getParou()) || (this->getBlackJack())){
             if (pontuacao > 21){
@@ -19,7 +19,7 @@ public:
 
             // Implementação de decisão automática para a CPU
             if (pontuacao < 17) {
-                this->receberCarta(baralho);
+                this->receberCarta(carta);
                 cout << getNome() << " decidiu pegar uma carta." << endl;
             } else {
                 cout << getNome() << " decidiu parar." << endl;

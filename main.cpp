@@ -1,12 +1,11 @@
 #include "Jogo.cpp"
-//#include "Jogador.cpp"
 
 int main() {
 
 //__________________________________________________________________________________________________________
 // Incializando o programa
 
-    int qJogadores, qReal, dinheiro;
+    int qJogadores, qReal;
     string nome;
     string nomes[15] = {
         "Nick", "Viny", "Dereck", "Gustavo", "Beatriz", "Laura",
@@ -21,16 +20,24 @@ int main() {
 //__________________________________________________________________________________________________________
 // Adicionando os jogadores no jogo
 
-    cout << "Quantos jogadores no total?" << endl;
-    cin >> qJogadores;
-
-    cout << "Quantos jogadores Reais?" << endl;
-    cin >> qReal;
-
-    for (int i=0; i<qReal; i++){
-        cout << "Nome do jogador " << i+1 << ": ";
-        cin >> nome;
-        jogo.adicionarJogador(nome, 1000, "real");
+    while(true){
+        cout << "Quantos jogadores no total? (Pode no maximo 6)" << endl;
+        cin >> qJogadores;
+        if(0 < qJogadores && qJogadores <= 6){
+            while (true) {
+                cout << "Quantos jogadores Reais?" << endl;
+                cin >> qReal;
+                if (0 <= qReal && qReal <= qJogadores) {
+                    for (int i = 0; i < qReal; i++) {
+                        cout << "Digite o nome do jogador " << i + 1 << endl;
+                        cin >> nome;
+                        jogo.adicionarJogador(nome, 1000, "real");
+                    }
+                    break;
+                }
+            }
+            break;
+        }
     }
 
     for (int i=0; i<(qJogadores - qReal); i++){
@@ -39,26 +46,19 @@ int main() {
     
 //_____________________________________________________________________________________________________________
 // Iniciando o jogo
-    jogo.adicionarDealer();
+    int n = 0; // Quantos jogos já aconteceu, iniciando pelo 0
 
-   for (int rod = 0; rod < 2; rod++){
-        int numero_rodada = rod + 1;
-        cout<<"======================"<<endl;
-        cout<< "Início da mão "<<numero_rodada<<endl;
-        cout<<"======================"<<endl;
-
-        jogo.iniciarJogo();
+    while(true){
+        jogo.iniciarJogo(n++);
         jogo.mostrarJogadores();
         jogo.rodadas();
-        //jogo.mostrarJogadores();
+        jogo.mostrarJogadores();
         jogo.finalJogo();
-
-        cout<<"======================"<<endl;
-        cout<< "Fim da mão "<<numero_rodada<<endl;
-        cout<<"======================"<<endl;
-        cout <<""<<endl;
-
-        numero_rodada += numero_rodada;
-        //return 0
+        char ch;
+        cout << "Quer continuar jogar (Sim -> 's'  |  Não -> qualquer letra): " << endl;
+        cin >> ch;
+        if (!(ch == 'S' || ch == 's')){
+            break;
+        }
     }
 }

@@ -11,7 +11,7 @@ public:
   JogadorReal(string nome, double dinheiro)
       : Jogador(nome, dinheiro) {}
 
-  virtual void pedirCarta(Baralho baralho, int pontuacao){
+  virtual void pedirCarta(Carta carta, int pontuacao){
     if (!(this->getParou())){
       if (pontuacao > 21){
         cout << getNome() << ", você estourou e não pode pegar mais cartas." << endl;
@@ -23,7 +23,7 @@ public:
       cout << "+1 carta? (Sim -> 's'  |  Não -> qualquer letra)" << endl;
       cin >> ch;
       if (ch == 'S' || ch == 's'){
-        this->receberCarta(baralho);
+        this->receberCarta(carta);
       }
       else{
         this->deciciuParar();

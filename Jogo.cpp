@@ -43,17 +43,19 @@ public:
 
     void realizarApostas() {
         for (size_t i = 0; i < jogadores.size(); ++i) {
-            if (jogadores[i]->getNome() != "Dealer") {  // Dealer não aposta
-                cout << "Jogador " << jogadores[i]->getNome() << ", ";
-                
-                // Verifica se é um JogadorCPU para apostar automaticamente
-                JogadorCPU* jogadorCPU = dynamic_cast<JogadorCPU*>(jogadores[i]);
-                if (jogadorCPU) {
-                    int aposta = jogadorCPU->apostarAutomaticamente();
-                    apostas[i] = Aposta(aposta, jogadores[i]->getDinheiro(), 0, jogadores[i]->getNome());
-                    cout << jogadorCPU->getNome() << " apostou automaticamente " << aposta << "." << endl;
-                } else {
-                    apostas[i].setAposta();  // Prompt para o jogador real
+            if (!(jogadores[i]->getParou())) {
+                if (jogadores[i]->getNome() != "Dealer") {  // Dealer não aposta
+                    cout << "Jogador " << jogadores[i]->getNome() << ", ";
+                    
+                    // Verifica se é um JogadorCPU para apostar automaticamente
+                    JogadorCPU* jogadorCPU = dynamic_cast<JogadorCPU*>(jogadores[i]);
+                    if (jogadorCPU) {
+                        int aposta = jogadorCPU->apostarAutomaticamente();
+                        apostas[i] = Aposta(aposta, jogadores[i]->getDinheiro(), 0, jogadores[i]->getNome());
+                        cout << jogadorCPU->getNome() << " apostou automaticamente " << aposta << "." << endl;
+                    } else {
+                        apostas[i].setAposta(jogadores[i]->getDinheiro());  // Prompt para o jogador real
+                    }
                 }
             }
         }
@@ -82,18 +84,36 @@ public:
         cout << "________________________________________________________________" << endl;
     }
 
-    void iniciarJogo() {
-        //this->adicionarDealer();
+    void iniciarJogo(int r) {
+        int a=0;
+        n = 0;
+        Aposta aposta;
+        if (r == 0){
+            this->adicionarDealer();
+        }
+        for (Jogador* jogador : jogadores) {
+            if (jogador->getDinheiro() <= 0){
+                jogador->semDinheiro();
+                Aposta& aposta = apostas[a];
+                aposta.valorApostadoZero(); // Não pode apostar
+                a++;
+                
+            }
+        }
         realizarApostas();  // Coletar as apostas no início do jogo
-        baralho.criarBaralho();
-        baralho.embaralharCartas();
-        
+        baralho.reiniciaBaralho();
+
         for (Jogador* jogador : jogadores) {
             int somaCartas = 0;
             int numAses = 0;
 
+            baralho.embaralharCartas();
+
+            if ((jogador->getDinheiro() == 0) && (jogador->getParou())){
+                continue;
+            }
             for (int i = 0; i < 2; ++i) {
-                jogador->receberCarta(baralho);
+                jogador->receberCarta(baralho.distribuirCarta());
                 Carta carta = jogador->getCarta(i);
                 int valorCarta = regras.calcularValorCarta(carta);
                 somaCartas += valorCarta;
@@ -119,7 +139,7 @@ public:
             cout << "Rodada " << rodadas++ << endl;
             for (Jogador* jogador : jogadores) {
                 pontuacaoAtual = jogador->calcularPontuacao();
-                jogador->pedirCarta(baralho, pontuacaoAtual);
+                jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
                 if (jogador->getParou()){
                     n++;
                 }
@@ -147,21 +167,27 @@ void finalJogo() {
         }
     }
 
-    // Determinar o resultado de cada jogador
+    // Determinar o resultado e retirar as cartas da mão de cada jogador 
     for (Jogador* jogador : jogadores) {
         if (jogador->getNome() == "Dealer") {
             continue;
         }
-
+        
         int pontuacaoJogador = jogador->calcularPontuacao();
 
         if (pontuacaoJogador > 21) {
             perdedores.push_back(jogador);
-        } else if (pontuacaoJogador > pontuacaoDealer || pontuacaoDealer > 21) {
+        } 
+        else if (pontuacaoJogador > pontuacaoDealer) {
             vencedores.push_back(jogador);
-        } else if (pontuacaoJogador == pontuacaoDealer) {
+        } 
+        else if(pontuacaoDealer > 21){
+            vencedores.push_back(jogador);
+        }
+        else if (pontuacaoJogador == pontuacaoDealer) {
             empatados.push_back(jogador);
-        } else {
+        } 
+        else {
             perdedores.push_back(jogador);
         }
     }
@@ -171,10 +197,15 @@ void finalJogo() {
         if (jogadores[i]->getNome() == "Dealer") continue;
 
         Aposta& aposta = apostas[i];
-
+        // ! Ver quando a pessoa nao tem dinheiro e nao pode receber dinheiro
         // Define o resultado da aposta usando o método setResultado
         if (find(vencedores.begin(), vencedores.end(), jogadores[i]) != vencedores.end()) {
-            aposta.setResultado(1);  // Vitória
+            if (jogadores[i]->getBlackJack()){
+                aposta.setResultado(3); // BlackJack
+            }
+            else{
+                aposta.setResultado(1);  // Vitória
+            }
         } else if (find(empatados.begin(), empatados.end(), jogadores[i]) != empatados.end()) {
             aposta.setResultado(0);  // Empate
         } else {
@@ -205,17 +236,10 @@ void finalJogo() {
     }
     cout << endl;
 
-    //para cada jogador eu limpo as cartas da mão e devolco ao monte, por fim, reembaralho a mão
-    for (Jogador* jogador : jogadores) {  
-        jogador->limparMao();
-        jogador->resetBlackJack();
-        jogador->resetParou();
-        jogador->resetQntCarta();
-        baralho.reembaralharCartas();
-        n = 0;
+    // Fim de jogo, tira as cartas da mao
+    for (Jogador* jogador : jogadores) {
+        jogador->tirarCartasMao();
     }
 
 }
-
-
 };

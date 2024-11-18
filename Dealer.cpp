@@ -7,7 +7,7 @@ public:
     Dealer()
         : JogadorCPU("Dealer", 1000000000) {}
 
-    virtual void pedirCarta(Baralho baralho, int pontuacao) {
+    virtual void pedirCarta(Carta carta, int pontuacao) {
         // int pontuacaoAtual = calcularPontuacao();
         if ((!this->getParou()) || (this->getBlackJack())){
             if (pontuacao > 21){
@@ -17,7 +17,7 @@ public:
 
             // Implementação de decisão automática para a CPU
             if (pontuacao < 17) {
-                this->receberCarta(baralho);
+                this->receberCarta(carta);
             } else {
                 this->deciciuParar();
             }

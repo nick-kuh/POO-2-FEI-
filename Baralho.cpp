@@ -13,12 +13,8 @@ private:
     int posicao = 0;
 
 public:
-   // Baralho(Carta cartas[52]){};
+    // Baralho(Carta cartas[52]){};
     Baralho(){
-        criarBaralho();
-    }
-
-    void criarBaralho(){
         for (int i=0; i<13; i++){
             for (int n=0; n<4; n++){
                 cartas[i*4+n] = Carta(i+1, n);
@@ -38,7 +34,6 @@ public:
     Carta distribuirCarta() {
         if (posicao < 52) {
             return cartas[posicao++];
-            cout << posicao<< endl;
         } 
         else {
             cout << "Todas as cartas foram distribuídas!" << endl;
@@ -51,11 +46,7 @@ public:
         return 52 - posicao;
     }
 
-    void reembaralharCartas(){
+    void reiniciaBaralho(){
         posicao = 0;
-        embaralharCartas();  // Reembaralha o baralho usando o método existente
-
     }
-
-
 };
