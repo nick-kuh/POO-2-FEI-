@@ -1,6 +1,7 @@
 #include "Jogo.cpp"
 
 int main() {
+    system("clear"); // Apagar o texto (limpar a tela)
 
 //__________________________________________________________________________________________________________
 // Incializando o programa
@@ -50,9 +51,11 @@ int main() {
 
     while(true){
         jogo.iniciarJogo(n++);
-        jogo.mostrarJogadores();
+        // jogo.mostrarJogadores();
+        jogo.exibirTabela();
         jogo.rodadas();
-        jogo.mostrarJogadores();
+        // jogo.mostrarJogadores();
+        jogo.exibirTabela();
         jogo.finalJogo();
         char ch;
         cout << "Quer continuar jogar (Sim -> 's'  |  Não -> qualquer letra): " << endl;

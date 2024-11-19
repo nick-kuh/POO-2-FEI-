@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <iomanip>  // Para usar std::setw
 #include "Baralho.cpp"
 #include "Jogador.cpp"
 #include "JogadorReal.cpp"
@@ -61,29 +62,6 @@ public:
         }
     }
 
-    
-    // Mostra os participantes
-    void mostrarJogadores() {
-        cout << "________________________________________________________________" << endl;
-        for (Jogador* jogador : jogadores) {
-            cout << jogador->getNome() << " | " << jogador->getDinheiro() << " | Cartas: ";
-            if((jogador->getNome() == "Dealer") && (n != qntJogadores)){
-                cout << jogador->getCarta(0).toStringCarta() << " ";
-                cout << endl;
-                continue;
-            }
-
-            jogador->mostrarMao();
-            cout << " | Pontuação: " << jogador->calcularPontuacao();
-
-            if(jogador->getBlackJack()){
-                cout << " | BLACK JACK!";
-            }
-            cout << endl;
-        }
-        cout << "________________________________________________________________" << endl;
-    }
-
     void iniciarJogo(int r) {
         int a=0;
         n = 0;
@@ -102,12 +80,11 @@ public:
         }
         realizarApostas();  // Coletar as apostas no início do jogo
         baralho.reiniciaBaralho();
+        baralho.embaralharCartas();
 
         for (Jogador* jogador : jogadores) {
             int somaCartas = 0;
             int numAses = 0;
-
-            baralho.embaralharCartas();
 
             if ((jogador->getDinheiro() == 0) && (jogador->getParou())){
                 continue;
@@ -120,6 +97,7 @@ public:
                 if (valorCarta == 11) {
                     numAses++;
                 }
+
             }
 
             somaCartas = regras.calcularMelhorPontuacao(somaCartas, numAses);
@@ -139,14 +117,17 @@ public:
             cout << "Rodada " << rodadas++ << endl;
             for (Jogador* jogador : jogadores) {
                 pontuacaoAtual = jogador->calcularPontuacao();
-                jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
                 if (jogador->getParou()){
                     n++;
                 }
+                else{ // Garantindo que o jogador não peça carta
+                    jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
+                }
             }
             this_thread::sleep_for(chrono::milliseconds(500));
-            mostrarJogadores();
-            if (n == jogadores.size()){
+            //! mostrarJogadores();
+            exibirTabela();
+            if (n == qntJogadores){
                 break;
             } 
         }
@@ -185,6 +166,14 @@ void finalJogo() {
             vencedores.push_back(jogador);
         }
         else if (pontuacaoJogador == pontuacaoDealer) {
+            if (jogador->getBlackJack()){
+                if(jogador->getNome() == "Dealer" && jogador->getBlackJack()){
+                    empatados.push_back(jogador);
+                }
+                else{
+                    vencedores.push_back(jogador);
+                }
+            }
             empatados.push_back(jogador);
         } 
         else {
@@ -240,6 +229,117 @@ void finalJogo() {
     for (Jogador* jogador : jogadores) {
         jogador->tirarCartasMao();
     }
-
 }
+
+    void exibirTabela() {
+        cout << "\033[2J";
+
+        cout << "\033[1;1H"; // Inicia na primeira linha
+
+        int larguraColuna = 140/qntJogadores; // Largura fixa para cada coluna
+
+        // Imprime os cabeçalhos
+        for (Jogador* jogador : jogadores) {
+            if(jogador->getNome() == "Dealer"){
+                cout << left << setw(larguraColuna) << jogador->getNome();
+                continue;
+            }
+            cout << left << setw(larguraColuna) << jogador->getNome() << " | ";
+        }
+        cout << endl;
+
+        cout << string((larguraColuna + 3) * qntJogadores - 2, '-') << endl;
+
+
+        // Determina o número máximo de cartas entre todos os jogadores
+        int maxCartas = 0;
+        for (Jogador* jogador : jogadores) {
+            maxCartas = max(maxCartas, jogador->getQntCartas());
+        }
+
+        // Exibe as cartas de cada jogador em linhas
+        for (int i = 0; i < maxCartas; ++i) {
+            for (Jogador* jogador : jogadores) {
+                if (i < jogador->getQntCartas()) {
+                    if((jogador->getNome() == "Dealer") && (n != qntJogadores)){
+                        if (i == 0){
+                            cout << setw(larguraColuna) << jogador->getCarta(0).toStringCarta();
+                        }
+                        continue;
+                    }
+
+                    cout << setw(larguraColuna);
+                    jogador->mostrarMao(i,1);
+                    cout << "  | ";
+                } 
+                else {
+                    if(jogador->getNome() == "Dealer"){
+                        cout << setw(larguraColuna) << " ";
+                        continue;
+                    }
+                    cout << setw(larguraColuna) << " " << " | "; // Espaço vazio se não houver carta
+                }
+            }
+            cout << endl;
+        }
+
+        // Linha de separação
+        cout << string((larguraColuna + 3) * qntJogadores - 2, '-') << endl;
+
+        // Exibe a pontuação de cada Jogador
+        for (Jogador* jogador : jogadores) {
+            if((jogador->getNome() == "Dealer") && (n != qntJogadores)){
+                // cout << endl;
+                continue;
+            }
+            cout << setw(larguraColuna) << jogador->calcularPontuacao() << " | ";
+        }
+        cout << endl;
+
+        cout << string((larguraColuna + 3) * qntJogadores - 2, '-') << endl;
+        
+        // Vai mostrar quem parou ou fez Black jack
+        for (Jogador* jogador : jogadores){
+            if(jogador->getNome() == "Dealer"){
+                continue;
+            }
+            if(jogador->getBlackJack()){
+                cout << setw(larguraColuna) << "BLACK JACK!" << " | ";
+            }
+            else if(jogador->getParou()){
+                cout << setw(larguraColuna) << "PAROU DE JOGAR!" << " | ";
+            }
+            else{
+                cout << setw(larguraColuna) << " " << " | "; // Espaço vazio se estiver jogando
+            }
+        }
+        cout << endl;
+
+
+        // Linha de separação
+        cout << string((larguraColuna + 3) * qntJogadores - 2, '=') << endl;
+        // cout << "\033[" << maxCartas + 2  << ";1H" << endl;
+    }
+
+    // Mostra os participantes
+    void mostrarJogadores() {
+        cout << "________________________________________________________________" << endl;
+        for (Jogador* jogador : jogadores) {
+            cout << jogador->getNome() << " | " << jogador->getDinheiro() << " | Cartas: ";
+            if((jogador->getNome() == "Dealer") && (n != qntJogadores)){
+                cout << jogador->getCarta(0).toStringCarta() << " ";
+                cout << endl;
+                continue;
+            }
+
+            jogador->mostrarMao(10, 0);
+            cout << " | Pontuação: " << jogador->calcularPontuacao();
+
+            if(jogador->getBlackJack()){
+                cout << " | BLACK JACK!";
+            }
+            cout << endl;
+        }
+        cout << "________________________________________________________________" << endl;
+    }
 };

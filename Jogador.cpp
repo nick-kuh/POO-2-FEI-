@@ -31,6 +31,10 @@ public:
         return dinheiro;
     }
 
+    int getQntCartas(){
+        return qnt_cartas;
+    }
+
     // Método para atualizar o saldo do jogador com o valor ganho ou perdido
     void atualizarDinheiro(double valor) {
         dinheiro += valor;
@@ -85,10 +89,16 @@ public:
         return pontuacaoAtual < 17;  // Exemplo: jogador pede carta se a pontuação for menor que 17
     }
 
-    void mostrarMao() { 
-        for (Carta carta : mao) {
-            cout << carta.toStringCarta() << " ";  // Usa toStringCarta() para representar a carta como string
+    void mostrarMao(int i, int a) { 
+        if (a == 0){
+            for (Carta carta : mao) {
+                cout << carta.toStringCarta() << " ";  // Usa toStringCarta() para representar a carta como string
+            }
         }
+        else{
+            cout << mao[i].toStringCarta() << " ";  // Usa toStringCarta() para representar a carta como string
+        }
+
 
     }
 
@@ -105,6 +115,7 @@ public:
     void tirarCartasMao(){
         parou = false;
         blackJack = false;
+        qnt_cartas = 0;
         mao.clear();
     }
 
