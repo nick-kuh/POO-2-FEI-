@@ -21,10 +21,13 @@ public:
             if (pontuacao < 17) {
                 this->receberCarta(carta);
                 cout << getNome() << " decidiu pegar uma carta." << endl;
-            } else {
+            } 
+            else {
                 cout << getNome() << " decidiu parar." << endl;
                 this->deciciuParar();
             }
+            cout << "\033[1B"; // Move o cursor para linha de baixo
+
         }
         else{
             cout << this->getNome() << " parou de jogar" << endl;

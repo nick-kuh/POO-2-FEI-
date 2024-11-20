@@ -44,19 +44,33 @@ public:
 
     void realizarApostas() {
         for (size_t i = 0; i < jogadores.size(); ++i) {
+            if(jogadores[i]->getDinheiro() == 0){
+                cout << "==========| " << jogadores[i]->getNome() << " |==========" << endl;
+                cout << "Não poderá mais jogar, acabou todo o dinheiro" << endl;
+                cout << "===================================" << endl;
+                cout << "\033[4A"; // Move o cursor 3 linhas para cima 
+                cout << "\033[J"; // Limpa tudo abaixo da linha atual 
+                this_thread::sleep_for(chrono::seconds(2));
+            }
             if (!(jogadores[i]->getParou())) {
                 if (jogadores[i]->getNome() != "Dealer") {  // Dealer não aposta
-                    cout << "Jogador " << jogadores[i]->getNome() << ", ";
+                    cout << "==========| " << jogadores[i]->getNome() << " |==========" << endl;
                     
                     // Verifica se é um JogadorCPU para apostar automaticamente
                     JogadorCPU* jogadorCPU = dynamic_cast<JogadorCPU*>(jogadores[i]);
                     if (jogadorCPU) {
                         int aposta = jogadorCPU->apostarAutomaticamente();
                         apostas[i] = Aposta(aposta, jogadores[i]->getDinheiro(), 0, jogadores[i]->getNome());
-                        cout << jogadorCPU->getNome() << " apostou automaticamente " << aposta << "." << endl;
+                        cout << " apostou automaticamente " << aposta << "." << endl;
                     } else {
                         apostas[i].setAposta(jogadores[i]->getDinheiro());  // Prompt para o jogador real
                     }
+                    cout << "===================================" << endl;
+                    this_thread::sleep_for(chrono::seconds(1));
+                    cout << "\033[4A"; // Move o cursor 3 linhas para cima 
+                    cout << "\033[J"; // Limpa tudo abaixo da linha atual 
+
+
                 }
             }
         }
@@ -114,17 +128,29 @@ public:
         int rodadas = 1;
         while (true){
             n = 0;
-            cout << "Rodada " << rodadas++ << endl;
+            cout << "\033[1;36m" << "Rodada " << rodadas++ << "\033[0m" << endl;
             for (Jogador* jogador : jogadores) {
                 pontuacaoAtual = jogador->calcularPontuacao();
                 if (jogador->getParou()){
                     n++;
                 }
                 else{ // Garantindo que o jogador não peça carta
+                    if (jogador->getNome() == "Dealer" ){
+                        jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
+
+                        continue;
+                    }
+                    cout << "_________________| " << jogador->getNome() << " |_________________" << endl;
                     jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
+                    cout << "_______________________________________________________" << endl;
+                    cout << "\033[4A"; // Move o cursor 3 linhas para cima 
+                    cout << "\033[J"; // Limpa tudo abaixo da linha atual 
+                    this_thread::sleep_for(chrono::seconds(1));
+
                 }
+
             }
-            this_thread::sleep_for(chrono::milliseconds(500));
+            this_thread::sleep_for(chrono::milliseconds(300));
             //! mostrarJogadores();
             exibirTabela();
             if (n == qntJogadores){
@@ -174,7 +200,9 @@ void finalJogo() {
                     vencedores.push_back(jogador);
                 }
             }
-            empatados.push_back(jogador);
+            else{
+                empatados.push_back(jogador);
+            }
         } 
         else {
             perdedores.push_back(jogador);
@@ -207,23 +235,23 @@ void finalJogo() {
     }
 
     // Exibe os resultados com o saldo de cada jogador
-    cout << "Vencedores: ";
+    cout << "\033[1;32m" << "Vencedores: ";
     for (Jogador* jogador : vencedores) {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
     }
     cout << endl;
 
-    cout << "Empatados: ";
+    cout << "\033[1;33m" << "Empatados: ";
     for (Jogador* jogador : empatados) {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
     }
     cout << endl;
 
-    cout << "Perdedores: ";
+    cout << "\033[1;31m" << "Perdedores: ";
     for (Jogador* jogador : perdedores) {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
     }
-    cout << endl;
+    cout << "\033[0m" << endl;
 
     // Fim de jogo, tira as cartas da mao
     for (Jogador* jogador : jogadores) {
@@ -267,6 +295,10 @@ void finalJogo() {
                         }
                         continue;
                     }
+                    if(jogador->getDinheiro() == 0){
+                        cout << setw(larguraColuna) << "Sem Dinheiro" << " | ";
+                        continue;
+                    }
 
                     cout << setw(larguraColuna);
                     jogador->mostrarMao(i,1);
@@ -279,6 +311,7 @@ void finalJogo() {
                     }
                     cout << setw(larguraColuna) << " " << " | "; // Espaço vazio se não houver carta
                 }
+                // this_thread::sleep_for(chrono::milliseconds(200));
             }
             cout << endl;
         }
@@ -321,6 +354,8 @@ void finalJogo() {
         // cout << "\033[" << maxCartas + 2  << ";1H" << endl;
     }
 
+
+    // Tirar esse método!!!!!!!!!
     // Mostra os participantes
     void mostrarJogadores() {
         cout << "________________________________________________________________" << endl;

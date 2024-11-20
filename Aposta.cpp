@@ -38,23 +38,30 @@ public:
     }
 
     void setAposta(double dinheiro) {
-        cout << "Você tem " << dinheiro << " disponível para apostar." << endl;
+        cout << "Tem " << dinheiro << " disponível para apostar." << endl;
         while(true){
             cout << "Qual o valor da aposta? ";
             cin >> valorApostado;
             // Verifica se a entrada é válida
             if (cin.fail()) {
+                cout << "\033[2A"; // Move o cursor 3 linhas para cima 
+                cout << "\033[J"; // Limpa tudo abaixo da linha atual 
                 cin.clear(); // Limpa o estado de erro
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignora a linha de entrada
                 cout << "Aposta inválida! É preciso que coloque um número." << endl;
             } 
-            else if (valorApostado > dinheiro) {
+            else if (valorApostado > dinheiro || valorApostado <= 0) {
+                cout << "\033[2A"; // Move o cursor 3 linhas para cima 
+                cout << "\033[J"; // Limpa tudo abaixo da linha atual 
                 cout << "Aposta inválida! Você não pode apostar mais do que o valor disponível (" << dinheiro << ")." << endl;
             } 
             else {
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa a entrada restante
                 break; // Se tudo estiver certo, sai do loop
             }
+
+
+
         }
     }
 

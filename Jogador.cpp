@@ -122,6 +122,6 @@ public:
     void semDinheiro(){
         this->deciciuParar();
         dinheiro = 0;
-        cout << "Não pode mais jogar, sem Dinheiro" << endl;
+        // cout << "Não pode mais jogar, sem Dinheiro" << endl;
     }
 };

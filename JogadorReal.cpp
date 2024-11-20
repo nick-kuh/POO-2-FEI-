@@ -14,7 +14,7 @@ public:
   virtual void pedirCarta(Carta carta, int pontuacao){
     if (!(this->getParou())){
       if (pontuacao > 21){
-        cout << getNome() << ", você estourou e não pode pegar mais cartas." << endl;
+        cout << "Ultrapassou de 21 pontos e não pode pegar mais cartas." << endl;
         this->deciciuParar();
         return;
       }
