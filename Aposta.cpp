@@ -37,6 +37,10 @@ public:
         this->jogador = jogador;
     }
 
+    int getValorApostado() const {
+    return valorApostado;
+}
+
     void setAposta(double dinheiro) {
         cout << "Tem " << dinheiro << " disponível para apostar." << endl;
         while(true){

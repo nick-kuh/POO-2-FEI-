@@ -22,6 +22,12 @@ int main() {
 // Adicionando os jogadores no jogo
 
     while (true) {
+        string nomeArquivoLog = "log.txt";
+        jogo.limparLog(nomeArquivoLog);
+        jogo.escreverLog("==================");
+        jogo.escreverLog("Início do Jogo!!!");
+        jogo.escreverLog("==================");
+
         cout << "Quantos jogadores no total? (Pode no máximo 6)" << endl;
 
         // Validação de entrada para números
@@ -63,6 +69,7 @@ int main() {
     while(true){
         system("clear"); // Apagar o texto (limpar a tela)
         cout << "\033[1;1H"; // Garantindo que o texto será impresso na primeira linha da tela
+
         jogo.iniciarJogo(n++);
         // jogo.mostrarJogadores();
         jogo.exibirTabela();
@@ -74,6 +81,10 @@ int main() {
         cout << "Quer continuar jogar (Sim -> 's'  |  Não -> qualquer letra): " << endl;
         cin >> ch;
         if (!(ch == 'S' || ch == 's')){
+            jogo.escreverLog("");
+            jogo.escreverLog("==================");
+            jogo.escreverLog("Fim de Jogo!!!");
+            jogo.escreverLog("==================");
             break;
         }
         // Como o print vai ate 23 linhas, então começara a apagar a partir do 24

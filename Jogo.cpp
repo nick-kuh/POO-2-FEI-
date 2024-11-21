@@ -3,6 +3,7 @@
 #include <thread>
 #include <vector>
 #include <iomanip>  // Para usar std::setw
+#include <fstream> // Para trabalhar com arquivos
 #include "Baralho.cpp"
 #include "Jogador.cpp"
 #include "JogadorReal.cpp"
@@ -25,13 +26,40 @@ public:
 
     Jogo(){}
 
+    void escreverLog(const std::string& mensagem) {
+        // Abrindo o arquivo em modo de adição (append)
+        std::ofstream arquivoLog("log.txt", std::ios::app);
+
+        // Verificando se o arquivo foi aberto corretamente
+        if (arquivoLog.is_open()) {
+            arquivoLog << mensagem << std::endl;
+            arquivoLog.close(); // Fechando o arquivo após escrever
+        } 
+        else {
+            std::cerr << "Não foi possível abrir o arquivo de log." << std::endl;
+        }
+    }
+
+    void limparLog(const std::string& nomeArquivo) {
+        std::ofstream arquivo(nomeArquivo, std::ios::trunc); // Abre o arquivo no modo truncate
+        if (arquivo.is_open()) {
+            arquivo.close(); // Fecha o arquivo imediatamente após truncá-lo
+        } else {
+            std::cerr << "Erro ao tentar limpar o arquivo de log." << std::endl;
+    }
+}
+
     // Adiciona Jogador
     void adicionarJogador(string nome, int dinheiro, string tipo){
         if(tipo == "real"){
             jogadores.push_back(new JogadorReal(nome, dinheiro));
+            escreverLog("Jogador real " + nome + " adicionado");
+
         }
         else if (tipo == "cpu"){
             jogadores.push_back(new JogadorCPU(nome, dinheiro));
+            escreverLog("Jogador CPU " + nome + " adicionado");
+
         }
         this->qntJogadores++;
         apostas.emplace_back(dinheiro, 0, nome); // Inicia a aposta para cada jogador
@@ -40,46 +68,65 @@ public:
     void adicionarDealer(){
         jogadores.push_back(new Dealer);
         this->qntJogadores++;
+        escreverLog("Dealer adicionado");
+
     }
 
-    void realizarApostas() {
-        for (size_t i = 0; i < jogadores.size(); ++i) {
-            if(jogadores[i]->getDinheiro() == 0){
+void realizarApostas() {
+    for (size_t i = 0; i < jogadores.size(); ++i) {
+        if ((jogadores[i]->getDinheiro()) <= 0) {
+            jogadores[i]->semDinheiro();
+            cout << "==========| " << jogadores[i]->getNome() << " |==========" << endl;
+            cout << "Não poderá mais jogar, acabou todo o dinheiro" << endl;
+            cout << "===================================" << endl;
+            cout << "\033[4A"; // Move o cursor 3 linhas para cima 
+            cout << "\033[J"; // Limpa tudo abaixo da linha atual 
+            this_thread::sleep_for(chrono::seconds(2));
+            escreverLog(jogadores[i]->getNome() + " parou de jogar porque ficou sem dinheiro.");
+        }
+
+        if (!(jogadores[i]->getParou())) {
+            if (jogadores[i]->getNome() != "Dealer") {  // Dealer não aposta
                 cout << "==========| " << jogadores[i]->getNome() << " |==========" << endl;
-                cout << "Não poderá mais jogar, acabou todo o dinheiro" << endl;
+
+                // Verifica se é um JogadorCPU para apostar automaticamente
+                JogadorCPU* jogadorCPU = dynamic_cast<JogadorCPU*>(jogadores[i]);
+                if (jogadorCPU) {
+                    double aposta = jogadorCPU->apostarAutomaticamente();
+                    apostas[i] = Aposta(aposta, jogadores[i]->getDinheiro(), 0, jogadores[i]->getNome());
+                    cout << "Apostou automaticamente " << aposta << "." << endl;
+
+                    // Log atualizado para incluir detalhes da aposta e saldo atual
+                    escreverLog(jogadores[i]->getNome() + " apostou automaticamente " + to_string(aposta) + ". Dinheiro restante: " + 
+                        to_string(jogadores[i]->getDinheiro() - aposta));
+                } 
+                else {
+                    // Jogadores reais fazem suas apostas manualmente
+                    apostas[i].setAposta(jogadores[i]->getDinheiro());  // Prompt para o jogador real
+                    double quantia = apostas[i].getValorApostado();
+                    double dindin = jogadores[i]->getDinheiro();
+                    double valor = dindin - quantia;
+
+                    // Log para jogadores reais
+                    escreverLog(jogadores[i]->getNome() + " apostou manualmente " + to_string(quantia) + ". Dinheiro restante: " + 
+                        to_string(valor));
+                }
+
                 cout << "===================================" << endl;
+                this_thread::sleep_for(chrono::seconds(1));
                 cout << "\033[4A"; // Move o cursor 3 linhas para cima 
                 cout << "\033[J"; // Limpa tudo abaixo da linha atual 
-                this_thread::sleep_for(chrono::seconds(2));
-            }
-            if (!(jogadores[i]->getParou())) {
-                if (jogadores[i]->getNome() != "Dealer") {  // Dealer não aposta
-                    cout << "==========| " << jogadores[i]->getNome() << " |==========" << endl;
-                    
-                    // Verifica se é um JogadorCPU para apostar automaticamente
-                    JogadorCPU* jogadorCPU = dynamic_cast<JogadorCPU*>(jogadores[i]);
-                    if (jogadorCPU) {
-                        int aposta = jogadorCPU->apostarAutomaticamente();
-                        apostas[i] = Aposta(aposta, jogadores[i]->getDinheiro(), 0, jogadores[i]->getNome());
-                        cout << " apostou automaticamente " << aposta << "." << endl;
-                    } else {
-                        apostas[i].setAposta(jogadores[i]->getDinheiro());  // Prompt para o jogador real
-                    }
-                    cout << "===================================" << endl;
-                    this_thread::sleep_for(chrono::seconds(1));
-                    cout << "\033[4A"; // Move o cursor 3 linhas para cima 
-                    cout << "\033[J"; // Limpa tudo abaixo da linha atual 
-
-
-                }
             }
         }
     }
+}
 
     void iniciarJogo(int r) {
         int a=0;
         n = 0;
         Aposta aposta;
+
+
         if (r == 0){
             this->adicionarDealer();
         }
@@ -92,10 +139,25 @@ public:
                 
             }
         }
+        escreverLog("");
+        escreverLog("==================");
+        escreverLog("Jogadores Apostando");
+        escreverLog("==================");
+
         realizarApostas();  // Coletar as apostas no início do jogo
         baralho.reiniciaBaralho();
         baralho.embaralharCartas();
+        escreverLog("");
+        escreverLog("==================");
+        escreverLog("Baralho embaralhado e jogo iniciado"); // LOG ADICIONADO
+        escreverLog("==================");
+        escreverLog("");
+        escreverLog("==================");
+        escreverLog("Distribuindo cartas"); // LOG ADICIONADO
+        escreverLog("==================");
 
+
+        
         for (Jogador* jogador : jogadores) {
             int somaCartas = 0;
             int numAses = 0;
@@ -106,6 +168,8 @@ public:
             for (int i = 0; i < 2; ++i) {
                 jogador->receberCarta(baralho.distribuirCarta());
                 Carta carta = jogador->getCarta(i);
+                escreverLog(jogador->getNome() + " recebeu uma carta: " + jogador->getCarta(i).toStringCarta()); // LOG ADICIONADO
+
                 int valorCarta = regras.calcularValorCarta(carta);
                 somaCartas += valorCarta;
                 if (valorCarta == 11) {
@@ -119,6 +183,8 @@ public:
             if (somaCartas == 21) {
                 jogador->deuBlackJack();
                 jogador->deciciuParar();
+                escreverLog(jogador->getNome() + " conseguiu um BLACKJACK!"); // LOG ADICIONADO
+
             } 
         }
     }
@@ -126,10 +192,19 @@ public:
     void rodadas(){
         int pontuacaoAtual;
         int rodadas = 1;
+
+        escreverLog("");
+        escreverLog("==================");
+        escreverLog("Início da Rodada 1");
+        escreverLog("==================");
+        
         while (true){
             n = 0;
             cout << "\033[1;36m" << "Rodada " << rodadas++ << "\033[0m" << endl;
+
+            
             for (Jogador* jogador : jogadores) {
+
                 pontuacaoAtual = jogador->calcularPontuacao();
                 if (jogador->getParou()){
                     n++;
@@ -137,7 +212,7 @@ public:
                 else{ // Garantindo que o jogador não peça carta
                     if (jogador->getNome() == "Dealer" ){
                         jogador->pedirCarta(baralho.distribuirCarta(), pontuacaoAtual);
-
+                        escreverLog("Dealer pediu uma carta"); // LOG ADICIONADO
                         continue;
                     }
                     cout << "_________________| " << jogador->getNome() << " |_________________" << endl;
@@ -145,10 +220,16 @@ public:
                     cout << "_______________________________________________________" << endl;
                     cout << "\033[4A"; // Move o cursor 3 linhas para cima 
                     cout << "\033[J"; // Limpa tudo abaixo da linha atual 
+                    
+                    if(jogador->getParou() == true){
+                        escreverLog(jogador->getNome() + " parou. Pontuação atual: " + to_string(jogador->calcularPontuacao())); // LOG ADICIONADO
+                    }
+                    else{
+                        escreverLog(jogador->getNome() + " pediu uma carta. Pontuação atual: " + to_string(jogador->calcularPontuacao())); // LOG ADICIONADO
+                    }
                     this_thread::sleep_for(chrono::seconds(1));
 
                 }
-
             }
             this_thread::sleep_for(chrono::milliseconds(300));
             //! mostrarJogadores();
@@ -156,7 +237,15 @@ public:
             if (n == qntJogadores){
                 break;
             } 
+                escreverLog("");
+                escreverLog("==================");
+                escreverLog("Início da Rodada " + to_string(rodadas));
+                escreverLog("==================");
+
         }
+        
+        escreverLog("Todos os jogadores decidiram parar, rodada encerrada."); // LOG ADICIONADO
+
     }
 
 
@@ -165,6 +254,10 @@ void finalJogo() {
     vector<Jogador*> empatados;
     vector<Jogador*> perdedores;
     int pontuacaoDealer;
+    escreverLog("");
+    escreverLog("==================");
+    escreverLog("Resultados!!!"); // LOG ADICIONADO
+    escreverLog("==================");
 
     // Obter a pontuação do Dealer
     for (Jogador* jogador : jogadores) {
@@ -184,28 +277,41 @@ void finalJogo() {
 
         if (pontuacaoJogador > 21) {
             perdedores.push_back(jogador);
+            escreverLog(jogador->getNome() + " perdeu do Dealer"); // LOG ADICIONADO
+
         } 
         else if (pontuacaoJogador > pontuacaoDealer) {
             vencedores.push_back(jogador);
+            escreverLog(jogador->getNome() + " venceu do Dealer"); // LOG ADICIONADO
+
         } 
         else if(pontuacaoDealer > 21){
             vencedores.push_back(jogador);
+            escreverLog(jogador->getNome() + " venceu do Dealer"); // LOG ADICIONADO
+
         }
         else if (pontuacaoJogador == pontuacaoDealer) {
             if (jogador->getBlackJack()){
                 if(jogador->getNome() == "Dealer" && jogador->getBlackJack()){
                     empatados.push_back(jogador);
+                    escreverLog(jogador->getNome() + " empatou com o Dealer"); // LOG ADICIONADO
+
                 }
                 else{
                     vencedores.push_back(jogador);
+                    escreverLog(jogador->getNome() + " venceu do Dealer"); // LOG ADICIONADO
+
                 }
             }
             else{
                 empatados.push_back(jogador);
+                escreverLog(jogador->getNome() + " empatou com o Dealer"); // LOG ADICIONADO
+
             }
         } 
         else {
             perdedores.push_back(jogador);
+            escreverLog(jogador->getNome() + " perdeu do Dealer"); // LOG ADICIONADO
         }
     }
 
@@ -235,21 +341,32 @@ void finalJogo() {
     }
 
     // Exibe os resultados com o saldo de cada jogador
+    escreverLog("");
+    escreverLog("==================");
+    escreverLog("Valores Atualizados:");
+    escreverLog("==================");
+
     cout << "\033[1;32m" << "Vencedores: ";
     for (Jogador* jogador : vencedores) {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
+        escreverLog(jogador->getNome() + " Novo valor: " + 
+            to_string(jogador->getDinheiro()));
     }
     cout << endl;
 
     cout << "\033[1;33m" << "Empatados: ";
     for (Jogador* jogador : empatados) {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
+        escreverLog(jogador->getNome() + " Novo valor: " + 
+            to_string(jogador->getDinheiro()));
     }
     cout << endl;
 
     cout << "\033[1;31m" << "Perdedores: ";
     for (Jogador* jogador : perdedores) {
         cout << jogador->getNome() << "(" << jogador->getDinheiro() << ") ";
+        escreverLog(jogador->getNome() + " Novo valor: " + 
+            to_string(jogador->getDinheiro()));
     }
     cout << "\033[0m" << endl;
 
