@@ -1,0 +1,408 @@
+==================
+Início do Jogo!!!
+==================
+Jogador real Nicolas adicionado
+Jogador real Vinicius adicionado
+Jogador CPU Daniel adicionado
+Jogador CPU Gustavo adicionado
+Jogador CPU Daniel adicionado
+Jogador CPU Lucas adicionado
+Dealer adicionado
+
+==================
+Jogadores Apostando
+==================
+Nicolas apostou manualmente 500.000000. Dinheiro restante: 500.000000
+Vinicius apostou manualmente 750.000000. Dinheiro restante: 250.000000
+Daniel apostou automaticamente 100.000000. Dinheiro restante: 900.000000
+Gustavo apostou automaticamente 100.000000. Dinheiro restante: 900.000000
+Daniel apostou automaticamente 100.000000. Dinheiro restante: 900.000000
+Lucas apostou automaticamente 100.000000. Dinheiro restante: 900.000000
+
+==================
+Baralho embaralhado e jogo iniciado
+==================
+
+==================
+Distribuindo cartas
+==================
+Nicolas recebeu uma carta: (9 , ♥)
+Nicolas recebeu uma carta: (4 , ♥)
+Vinicius recebeu uma carta: (7 , ♦)
+Vinicius recebeu uma carta: (K , ♣)
+Daniel recebeu uma carta: (2 , ♣)
+Daniel recebeu uma carta: (4 , ♦)
+Gustavo recebeu uma carta: (5 , ♦)
+Gustavo recebeu uma carta: (2 , ♦)
+Daniel recebeu uma carta: (Q , ♠)
+Daniel recebeu uma carta: (J , ♠)
+Lucas recebeu uma carta: (K , ♠)
+Lucas recebeu uma carta: (8 , ♠)
+Dealer recebeu uma carta: (J , ♣)
+Dealer recebeu uma carta: (A , ♥)
+Dealer conseguiu um BLACKJACK!
+
+==================
+Início da Rodada 1
+==================
+Nicolas pediu uma carta. Pontuação atual: 18
+Vinicius pediu uma carta. Pontuação atual: 27
+Daniel pediu uma carta. Pontuação atual: 16
+Gustavo pediu uma carta. Pontuação atual: 15
+Daniel parou. Pontuação atual: 20
+Lucas parou. Pontuação atual: 18
+
+==================
+Início da Rodada 2
+==================
+Nicolas parou. Pontuação atual: 18
+Vinicius parou. Pontuação atual: 27
+Daniel pediu uma carta. Pontuação atual: 19
+Gustavo pediu uma carta. Pontuação atual: 25
+
+==================
+Início da Rodada 3
+==================
+Daniel parou. Pontuação atual: 19
+Gustavo parou. Pontuação atual: 25
+
+==================
+Início da Rodada 4
+==================
+Todos os jogadores decidiram parar, rodada encerrada.
+
+==================
+Resultados!!!
+==================
+Nicolas perdeu do Dealer
+Vinicius perdeu do Dealer
+Daniel perdeu do Dealer
+Gustavo perdeu do Dealer
+Daniel perdeu do Dealer
+Lucas perdeu do Dealer
+
+==================
+Valores Atualizados:
+==================
+Nicolas Novo valor: 500.000000
+Vinicius Novo valor: 250.000000
+Daniel Novo valor: 900.000000
+Gustavo Novo valor: 900.000000
+Daniel Novo valor: 900.000000
+Lucas Novo valor: 900.000000
+
+==================
+Jogadores Apostando
+==================
+Nicolas apostou manualmente 500.000000. Dinheiro restante: 0.000000
+Vinicius apostou manualmente 250.000000. Dinheiro restante: 0.000000
+Daniel apostou automaticamente 90.000000. Dinheiro restante: 810.000000
+Gustavo apostou automaticamente 90.000000. Dinheiro restante: 810.000000
+Daniel apostou automaticamente 90.000000. Dinheiro restante: 810.000000
+Lucas apostou automaticamente 90.000000. Dinheiro restante: 810.000000
+
+==================
+Baralho embaralhado e jogo iniciado
+==================
+
+==================
+Distribuindo cartas
+==================
+Nicolas recebeu uma carta: (9 , ♦)
+Nicolas recebeu uma carta: (J , ♦)
+Vinicius recebeu uma carta: (J , ♥)
+Vinicius recebeu uma carta: (3 , ♥)
+Daniel recebeu uma carta: (3 , ♣)
+Daniel recebeu uma carta: (A , ♠)
+Gustavo recebeu uma carta: (8 , ♠)
+Gustavo recebeu uma carta: (5 , ♦)
+Daniel recebeu uma carta: (10 , ♦)
+Daniel recebeu uma carta: (7 , ♦)
+Lucas recebeu uma carta: (Q , ♥)
+Lucas recebeu uma carta: (7 , ♥)
+Dealer recebeu uma carta: (9 , ♣)
+Dealer recebeu uma carta: (K , ♣)
+
+==================
+Início da Rodada 1
+==================
+Nicolas parou. Pontuação atual: 19
+Vinicius pediu uma carta. Pontuação atual: 19
+Daniel pediu uma carta. Pontuação atual: 14
+Gustavo pediu uma carta. Pontuação atual: 16
+Daniel parou. Pontuação atual: 17
+Lucas parou. Pontuação atual: 17
+Dealer pediu uma carta
+
+==================
+Início da Rodada 2
+==================
+Vinicius parou. Pontuação atual: 19
+Daniel pediu uma carta. Pontuação atual: 20
+Gustavo pediu uma carta. Pontuação atual: 20
+
+==================
+Início da Rodada 3
+==================
+Daniel parou. Pontuação atual: 20
+Gustavo parou. Pontuação atual: 20
+
+==================
+Início da Rodada 4
+==================
+Todos os jogadores decidiram parar, rodada encerrada.
+
+==================
+Resultados!!!
+==================
+Nicolas empatou com o Dealer
+Vinicius empatou com o Dealer
+Daniel venceu do Dealer
+Gustavo venceu do Dealer
+Daniel perdeu do Dealer
+Lucas perdeu do Dealer
+
+==================
+Valores Atualizados:
+==================
+Daniel Novo valor: 990.000000
+Gustavo Novo valor: 990.000000
+Nicolas Novo valor: 500.000000
+Vinicius Novo valor: 250.000000
+Daniel Novo valor: 810.000000
+Lucas Novo valor: 810.000000
+
+==================
+Jogadores Apostando
+==================
+Nicolas apostou manualmente 500.000000. Dinheiro restante: 0.000000
+Vinicius apostou manualmente 200.000000. Dinheiro restante: 50.000000
+Daniel apostou automaticamente 99.000000. Dinheiro restante: 891.000000
+Gustavo apostou automaticamente 99.000000. Dinheiro restante: 891.000000
+Daniel apostou automaticamente 81.000000. Dinheiro restante: 729.000000
+Lucas apostou automaticamente 81.000000. Dinheiro restante: 729.000000
+
+==================
+Baralho embaralhado e jogo iniciado
+==================
+
+==================
+Distribuindo cartas
+==================
+Nicolas recebeu uma carta: (J , ♦)
+Nicolas recebeu uma carta: (Q , ♣)
+Vinicius recebeu uma carta: (K , ♣)
+Vinicius recebeu uma carta: (3 , ♥)
+Daniel recebeu uma carta: (2 , ♣)
+Daniel recebeu uma carta: (Q , ♥)
+Gustavo recebeu uma carta: (9 , ♣)
+Gustavo recebeu uma carta: (J , ♠)
+Daniel recebeu uma carta: (5 , ♣)
+Daniel recebeu uma carta: (4 , ♦)
+Lucas recebeu uma carta: (3 , ♠)
+Lucas recebeu uma carta: (3 , ♣)
+Dealer recebeu uma carta: (4 , ♠)
+Dealer recebeu uma carta: (J , ♣)
+
+==================
+Início da Rodada 1
+==================
+Nicolas pediu uma carta. Pontuação atual: 26
+Vinicius pediu uma carta. Pontuação atual: 14
+Daniel pediu uma carta. Pontuação atual: 22
+Gustavo parou. Pontuação atual: 19
+Daniel pediu uma carta. Pontuação atual: 19
+Lucas pediu uma carta. Pontuação atual: 11
+Dealer pediu uma carta
+
+==================
+Início da Rodada 2
+==================
+Nicolas parou. Pontuação atual: 26
+Vinicius pediu uma carta. Pontuação atual: 19
+Daniel parou. Pontuação atual: 22
+Daniel parou. Pontuação atual: 19
+Lucas pediu uma carta. Pontuação atual: 20
+Dealer pediu uma carta
+
+==================
+Início da Rodada 3
+==================
+Vinicius pediu uma carta. Pontuação atual: 21
+Lucas parou. Pontuação atual: 20
+Dealer pediu uma carta
+
+==================
+Início da Rodada 4
+==================
+Vinicius parou. Pontuação atual: 21
+
+==================
+Início da Rodada 5
+==================
+Todos os jogadores decidiram parar, rodada encerrada.
+
+==================
+Resultados!!!
+==================
+Nicolas perdeu do Dealer
+Vinicius empatou com o Dealer
+Daniel perdeu do Dealer
+Gustavo perdeu do Dealer
+Daniel perdeu do Dealer
+Lucas perdeu do Dealer
+
+==================
+Valores Atualizados:
+==================
+Vinicius Novo valor: 250.000000
+Nicolas Novo valor: 0.000000
+Daniel Novo valor: 891.000000
+Gustavo Novo valor: 891.000000
+Daniel Novo valor: 729.000000
+Lucas Novo valor: 729.000000
+
+==================
+Jogadores Apostando
+==================
+Nicolas parou de jogar porque ficou sem dinheiro.
+Vinicius apostou manualmente 250.000000. Dinheiro restante: 0.000000
+Daniel apostou automaticamente 89.000000. Dinheiro restante: 802.000000
+Gustavo apostou automaticamente 89.000000. Dinheiro restante: 802.000000
+Daniel apostou automaticamente 72.000000. Dinheiro restante: 657.000000
+Lucas apostou automaticamente 72.000000. Dinheiro restante: 657.000000
+
+==================
+Baralho embaralhado e jogo iniciado
+==================
+
+==================
+Distribuindo cartas
+==================
+Vinicius recebeu uma carta: (Q , ♠)
+Vinicius recebeu uma carta: (9 , ♥)
+Daniel recebeu uma carta: (K , ♣)
+Daniel recebeu uma carta: (6 , ♦)
+Gustavo recebeu uma carta: (A , ♠)
+Gustavo recebeu uma carta: (9 , ♠)
+Daniel recebeu uma carta: (K , ♥)
+Daniel recebeu uma carta: (6 , ♣)
+Lucas recebeu uma carta: (8 , ♠)
+Lucas recebeu uma carta: (J , ♥)
+Dealer recebeu uma carta: (3 , ♦)
+Dealer recebeu uma carta: (8 , ♣)
+
+==================
+Início da Rodada 1
+==================
+Vinicius pediu uma carta. Pontuação atual: 29
+Daniel pediu uma carta. Pontuação atual: 25
+Gustavo parou. Pontuação atual: 20
+Daniel pediu uma carta. Pontuação atual: 18
+Lucas parou. Pontuação atual: 18
+Dealer pediu uma carta
+
+==================
+Início da Rodada 2
+==================
+Vinicius parou. Pontuação atual: 29
+Daniel parou. Pontuação atual: 25
+Daniel parou. Pontuação atual: 18
+Dealer pediu uma carta
+
+==================
+Início da Rodada 3
+==================
+Todos os jogadores decidiram parar, rodada encerrada.
+
+==================
+Resultados!!!
+==================
+Nicolas perdeu do Dealer
+Vinicius perdeu do Dealer
+Daniel perdeu do Dealer
+Gustavo perdeu do Dealer
+Daniel perdeu do Dealer
+Lucas perdeu do Dealer
+
+==================
+Valores Atualizados:
+==================
+Nicolas Novo valor: 0.000000
+Vinicius Novo valor: 0.000000
+Daniel Novo valor: 802.000000
+Gustavo Novo valor: 802.000000
+Daniel Novo valor: 657.000000
+Lucas Novo valor: 657.000000
+
+==================
+Jogadores Apostando
+==================
+Nicolas parou de jogar porque ficou sem dinheiro.
+Vinicius parou de jogar porque ficou sem dinheiro.
+Daniel apostou automaticamente 80.000000. Dinheiro restante: 722.000000
+Gustavo apostou automaticamente 80.000000. Dinheiro restante: 722.000000
+Daniel apostou automaticamente 65.000000. Dinheiro restante: 592.000000
+Lucas apostou automaticamente 65.000000. Dinheiro restante: 592.000000
+
+==================
+Baralho embaralhado e jogo iniciado
+==================
+
+==================
+Distribuindo cartas
+==================
+Daniel recebeu uma carta: (6 , ♥)
+Daniel recebeu uma carta: (4 , ♥)
+Gustavo recebeu uma carta: (10 , ♣)
+Gustavo recebeu uma carta: (7 , ♦)
+Daniel recebeu uma carta: (K , ♠)
+Daniel recebeu uma carta: (J , ♣)
+Lucas recebeu uma carta: (5 , ♦)
+Lucas recebeu uma carta: (K , ♣)
+Dealer recebeu uma carta: (10 , ♦)
+Dealer recebeu uma carta: (A , ♦)
+Dealer conseguiu um BLACKJACK!
+
+==================
+Início da Rodada 1
+==================
+Daniel pediu uma carta. Pontuação atual: 18
+Gustavo parou. Pontuação atual: 17
+Daniel parou. Pontuação atual: 20
+Lucas pediu uma carta. Pontuação atual: 22
+
+==================
+Início da Rodada 2
+==================
+Daniel parou. Pontuação atual: 18
+Lucas parou. Pontuação atual: 22
+
+==================
+Início da Rodada 3
+==================
+Todos os jogadores decidiram parar, rodada encerrada.
+
+==================
+Resultados!!!
+==================
+Nicolas perdeu do Dealer
+Vinicius perdeu do Dealer
+Daniel perdeu do Dealer
+Gustavo perdeu do Dealer
+Daniel perdeu do Dealer
+Lucas perdeu do Dealer
+
+==================
+Valores Atualizados:
+==================
+Nicolas Novo valor: 0.000000
+Vinicius Novo valor: 0.000000
+Daniel Novo valor: 722.000000
+Gustavo Novo valor: 722.000000
+Daniel Novo valor: 592.000000
+Lucas Novo valor: 592.000000
+
+==================
+Fim de Jogo!!!
+==================
