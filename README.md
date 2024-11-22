@@ -1,126 +1,60 @@
-# POO-2-FEI-
+# Jogo de Cartas - Blackjack
 
-Para desenvolver o jogo de cartas em C++ com orientação a objetos, integrando herança, polimorfismo, métodos virtuais, composição e agregação, aqui está um panorama geral de como estruturar o projeto:
+Este projeto é uma implementação simples do jogo Blackjack, onde um jogador humano pode competir contra um jogador controlado por CPU. O código é escrito em C++ e demonstra conceitos de programação orientada a objetos, como herança e polimorfismo. Este projeto foi desenvolvido como parte de um trabalho na FEI.
 
-1. Classes e Estrutura Básica
-Classe Carta: Representa uma carta de baralho com atributos como naipe e valor.
-Classe Baralho: Contém um conjunto de cartas e métodos para embaralhar e distribuir.
-Classe Jogador: Representa cada jogador, com cartas na mão e métodos para jogar.
-Classe Jogo: Controla a lógica do jogo (Blackjack ou 21, por exemplo), incluindo as regras e a interação entre os jogadores e o baralho.
-2. Herança
-A herança pode ser aplicada aos diferentes tipos de Jogadores.
-Classe Jogador (superclasse):
-Atributos: nome, pontuação, cartas na mão.
-Métodos: receber carta, calcular pontos, tomar decisão (jogar ou passar).
-Classe JogadorHumano e Classe JogadorComputador (subclasses de Jogador):
-Ambas herdam de Jogador, mas podem tomar decisões de formas diferentes (ex.: humano decide manualmente, enquanto o computador segue regras automáticas).
-3. Polimorfismo e Método Virtual
-O método virtual tomarDecisao() na classe Jogador será sobrescrito pelas subclasses JogadorHumano e JogadorComputador.
-Exemplo:
-cpp
-Copiar código
-class Jogador {
-public:
-    virtual void tomarDecisao() = 0; // Método virtual puro
-};
+## Objetivo do Jogo
 
-class JogadorHumano : public Jogador {
-public:
-    void tomarDecisao() override {
-        // Implementação para jogador humano
-    }
-};
+O objetivo do Blackjack é obter uma mão de cartas que some o mais próximo possível de 21, sem ultrapassar esse valor. O jogador compete contra a CPU, e o vencedor é aquele que tiver a maior pontuação sem estourar (ultrapassar 21).
 
-class JogadorComputador : public Jogador {
-public:
-    void tomarDecisao() override {
-        // Implementação automática para o computador
-    }
-};
-O polimorfismo será útil quando você tiver um array de ponteiros para jogadores (humano e computador) e invocar tomarDecisao() em cada um deles de forma dinâmica.
-4. Composição
-A classe Jogo terá um Baralho (composição). Isso significa que o baralho será parte integrante da classe Jogo, e será criado e destruído junto com o jogo.
-Exemplo:
-cpp
-Copiar código
-class Jogo {
-private:
-    Baralho baralho; // Composição: Baralho é parte do Jogo
-    std::vector<Jogador*> jogadores; // Lista de jogadores (humanos e computador)
-public:
-    void iniciarJogo();
-};
-5. Agregação
-A classe Jogador pode ter uma relação de agregação com as Cartas (um jogador possui cartas, mas não necessariamente as destrói ao ser destruído).
-Exemplo:
-cpp
-Copiar código
-class Jogador {
-private:
-    std::vector<Carta*> cartasNaMao; // Agregação: Jogador possui cartas, mas não as "controla" diretamente.
-public:
-    void adicionarCarta(Carta* carta);
-};
-6. Regras de Jogo e Interação
-Classe Jogo:
-Controle do fluxo do jogo (distribuir cartas, rodadas, verificar vencedor).
-Interação entre jogadores, onde o método tomarDecisao() é invocado de forma polimórfica.
-Controle do Baralho (embaralhar, distribuir).
-Exemplo Simplificado da Estrutura de Código
-cpp
-Copiar código
-class Carta {
-private:
-    std::string naipe;
-    int valor;
-public:
-    Carta(std::string naipe, int valor) : naipe(naipe), valor(valor) {}
-    int getValor() { return valor; }
-};
+## Como Jogar
 
-class Baralho {
-private:
-    std::vector<Carta> cartas;
-public:
-    void embaralhar();
-    Carta distribuir();
-};
+1. **Início do Jogo**: Ao iniciar o programa, o jogador humano será solicitado a fazer uma aposta inicial. A CPU fará uma aposta automaticamente com base em seu saldo.
 
-class Jogador {
-protected:
-    std::vector<Carta*> mao;
-public:
-    virtual void tomarDecisao() = 0;
-    void receberCarta(Carta* carta) { mao.push_back(carta); }
-    int calcularPontuacao();
-};
+2. **Distribuição das Cartas**: O jogador e a CPU recebem duas cartas cada um. As cartas são representadas por valores numéricos, onde as cartas de 2 a 10 valem seu valor nominal, as cartas de figura (J, Q, K) valem 10, e o Ás pode valer 1 ou 11, dependendo da situação.
 
-class JogadorHumano : public Jogador {
-public:
-    void tomarDecisao() override {
-        // Implementação para jogador humano
-    }
-};
+3. **Turno do Jogador**: O jogador humano terá a opção de:
+   - **Pedir Carta**: Solicitar uma nova carta para tentar aumentar sua pontuação.
+   - **Parar**: Manter sua pontuação atual e passar a vez para a CPU.
 
-class JogadorComputador : public Jogador {
-public:
-    void tomarDecisao() override {
-        // Implementação automática para computador
-    }
-};
+4. **Turno da CPU**: A CPU tomará decisões automaticamente com base em sua pontuação atual, seguindo a regra de parar se a pontuação for 17 ou mais.
 
-class Jogo {
-private:
-    Baralho baralho;
-    std::vector<Jogador*> jogadores;
-public:
-    void iniciarJogo() {
-        // Lógica para distribuir cartas, rodadas, etc.
-    }
-};
-Pontos-Chave para Focar
-Herança: Reaproveitar código com Jogador, JogadorHumano, JogadorComputador.
-Polimorfismo: Implementar ações dinâmicas como tomarDecisao().
-Composição: Baralho como parte do Jogo, controlado diretamente por ele.
-Agregação: Cartas associadas aos jogadores, mas com vida própria no baralho.
-Isso te dará uma base sólida para criar um jogo de cartas bem estruturado e orientado a objetos!
+5. **Resultado do Jogo**: Após ambos os jogadores completarem seus turnos, o vencedor será determinado com base nas pontuações finais. O jogador que tiver a maior pontuação sem estourar vence a rodada.
+
+## Estrutura do Projeto
+
+O projeto contém as seguintes classes principais:
+
+### Classe `Jogador`
+
+A classe `Jogador` é a classe base que representa um jogador genérico. Ela contém atributos e métodos comuns a todos os jogadores, como:
+
+- **Atributos**:
+  - `dinheiro`: O saldo do jogador, que representa a quantidade de dinheiro que ele tem para apostar.
+  - `mao`: Um vetor que armazena as cartas na mão do jogador.
+  
+- **Métodos**:
+  - `pedirCarta()`: Método que permite ao jogador pegar uma nova carta.
+  - `parar()`: Método que define que o jogador decidiu parar de pedir cartas.
+  - `calcularPontuacao()`: Método que calcula a pontuação atual do jogador com base nas cartas na mão.
+
+### Classe `JogadorCPU`
+
+A classe `JogadorCPU` herda da classe `Jogador` e implementa a lógica para a tomada de decisões da CPU. As principais funcionalidades incluem:
+
+- **Método `pedirCarta`**: Este método é responsável por decidir se a CPU deve pegar uma nova carta ou parar com base na pontuação atual. A CPU seguirá a regra de parar se a pontuação for 17 ou mais e pegará uma carta se a pontuação for inferior a 17.
+
+- **Método `apostarAutomaticamente`**: Este método calcula o valor da aposta da CPU como 10% do seu saldo. Se a aposta calculada for inferior a 10, ela será ajustada para 10.
+
+### Classe `Jogo`
+
+A classe `Jogo` gerencia o fluxo do jogo e a interação entre os jogadores. Ela contém métodos para:
+
+- **Iniciar o jogo**: Configura o jogo e distribui as cartas iniciais.
+- **Gerenciar turnos**: Alterna entre o jogador humano e a CPU, permitindo que cada um tome suas decisões.
+- **Determinar o vencedor**: Avalia as pontuações finais e determina o vencedor da rodada.
+
+## Como Executar no Terminal
+
+Compilar: g++ main.cpp
+Executar: ./a.out
+   
