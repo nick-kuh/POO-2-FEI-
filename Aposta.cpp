@@ -1,8 +1,5 @@
 #pragma once
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <random>
 
 using namespace std;
 
@@ -16,6 +13,7 @@ private:
 
 public:
 
+    // Construtor sem Parametros 
     Aposta() {
         this->valorApostado = valorApostado;
         this->dinheiro = dinheiro;
@@ -23,24 +21,20 @@ public:
         this->jogador = jogador;
     }
 
-    Aposta(int dinheiro, int resultado, string jogador) {
+    // Construtor com parametros 
+    Aposta(int valorApostado, int dinheiro, string jogador) {
         this->valorApostado = valorApostado;
         this->dinheiro = dinheiro;
         this->resultado = resultado;
         this->jogador = jogador;
     }
 
-    Aposta(int valorApostado, int dinheiro, int resultado, string jogador) {
-        this->valorApostado = valorApostado;
-        this->dinheiro = dinheiro;
-        this->resultado = resultado;
-        this->jogador = jogador;
+    // Método para pegar o valor apostado
+    int getValorApostado() {
+        return valorApostado;
     }
 
-    int getValorApostado() const {
-    return valorApostado;
-}
-
+    // Aqui define o valor apostado
     void setAposta(double dinheiro) {
         cout << "Tem " << dinheiro << " disponível para apostar." << endl;
         while(true){
@@ -54,6 +48,7 @@ public:
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignora a linha de entrada
                 cout << "Aposta inválida! É preciso que coloque um número." << endl;
             } 
+            // Verifica se a entrada é válida com o quanto de dinheiro que vc tem
             else if (valorApostado > dinheiro || valorApostado <= 0) {
                 cout << "\033[2A"; // Move o cursor 3 linhas para cima 
                 cout << "\033[J"; // Limpa tudo abaixo da linha atual 
@@ -63,9 +58,6 @@ public:
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa a entrada restante
                 break; // Se tudo estiver certo, sai do loop
             }
-
-
-
         }
     }
 
@@ -88,15 +80,17 @@ public:
     }
 
 
-    // Novo método para definir o resultado
+    // Método para definir o resultado
     void setResultado(int res) {
         resultado = res;
     }
 
-    int getValorRecebido() const {
+    // Método para pegar o valor recebido
+    int getValorRecebido() {
         return valorRecebido;
     }
 
+    // Quando acabar dinheiro, garantir que o jogador não aposte nada
     void valorApostadoZero() {
         valorApostado = 0;
     }

@@ -4,7 +4,7 @@ using namespace std;
 
 class Carta{
 private:
-    string valor; // Foi colocado string, pois quando o valor é 10, nao funciona
+    string valor;
     int vValor;
     int vNaipe;
     string naipe;
@@ -16,7 +16,7 @@ public:
 
     // Construtor parametrizado para inicializar valor e naipe
     Carta(int vValor, int vNaipe) : vValor(vValor), vNaipe(vNaipe) {
-        // Inicializamos o `naipe` com base em `vNaipe`
+        // Inicializamos o `naipe` com base em valores `vNaipe`
         if (vNaipe == 0){
             naipe = "♥"; // Copas
         }
@@ -33,6 +33,7 @@ public:
             naipe = ' ';
         }
 
+        // Aqui também tem a mudança de valor para cartas nobres 
         if (vValor == 1){
             valor = 'A'; // Ás
         }
@@ -45,23 +46,17 @@ public:
         else if (vValor == 13){
             valor = 'K';  // Rei
         }
-        else{
+        else{ 
             valor = to_string(vValor); // Conversão para números 2-10
         }
     }
     
+    // Método para pegar o valor da carta, para depois calcular a pontuação da mão de um jogador
     int getValor(){
         return vValor;
     }
 
-    // int getV_Naipe(){
-    //     return vNaipe;
-    // }
-
-    // string getNaipe(){
-    //     return naipe;
-    // }
-
+    // Método que ajuda a tranformar a carta em uma strint, para depois poder imprimir no terminal
     string toStringCarta(){
         return "(" + valor + " , " + naipe + ")";
     }

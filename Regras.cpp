@@ -1,11 +1,9 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include "Carta.cpp"
 #include "Jogador.cpp"
 
 using namespace std;
-
 
 class Regras {
 public:
