@@ -1,3 +1,10 @@
+/*
+Feito pelos alunos da FEI:
+Dereck Nasser (11.122.427-5)
+Nicolas Kuhnast (11.122.431-7)
+Vinicius Renan de Lima e SIlva Grec (11.122.375-6)
+*/
+
 #include "Jogo.cpp"
 
 int main() {
