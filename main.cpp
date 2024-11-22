@@ -63,18 +63,16 @@ int main() {
     }
     
 //_____________________________________________________________________________________________________________
-// Iniciando o jogo
+// Jogo
     int n = 0; // Quantos jogos já aconteceu, iniciando pelo 0
 
     while(true){
         system("clear"); // Apagar o texto (limpar a tela)
         cout << "\033[1;1H"; // Garantindo que o texto será impresso na primeira linha da tela
 
-        jogo.iniciarJogo(n++);
-        // jogo.mostrarJogadores();
+        jogo.iniciarJogo(n++); 
         jogo.exibirTabela();
         jogo.rodadas();
-        // jogo.mostrarJogadores();
         jogo.exibirTabela();
         jogo.finalJogo();
         char ch;
@@ -86,12 +84,6 @@ int main() {
             jogo.escreverLog("Fim de Jogo!!!");
             jogo.escreverLog("==================");
             break;
-        }
-        // Como o print vai ate 23 linhas, então começara a apagar a partir do 24
-        for (int i = 24; i < 75; i++){               
-            cout << "\033[" << i << ";1H";   //
-            cout << "\033[2K";  // Limpa a linha atual onde estava o "apertouuuu!"
-            
         }
     }
 }
